@@ -2,6 +2,9 @@
 \usepackage{graphicx} 
 \usepackage{float} % necessary for placement of figures
 \usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{pgfgantt} % load Gant chart package
+\usepackage{array}
 \usepackage[style = authoryear, sorting = nyt, backend = biber]{biblatex}
 % \addbibresource[location = local, type = file]{C:/Users/bloh356/Google Drive/Library/Library.bib}
 \addbibresource[location = local, type = file]{/Users/bloh356/Google Drive/Library/Library.bib}
@@ -15,40 +18,45 @@
 \begin{document}
 \maketitle
 
+\section{Abstract}
+What does uncertainty and nonstationarity in gas-fired generator reliability mean for the long-term reliability of our electricity system (and its optimal design)(In progress)? 
+We anticipate that traditional methods significantly underestimate the riskiness of investment decisions and thus, overestimate system reliability, which potentially exposes consumers, generators, and system operators to greater risks of unmet demand. 
+The contribution of our model to the literature is in the assessment of uncertainty and nonstationarity of the outage rate parameter on the optimal resource mix (as compared to existing methods). 
+We anticipate that the composition, costs, and reliability resulting from our method will be quite different than existing methods, which rely on single point parameter estimates. 
 
-\subsection{Introduction}
-	Planning and investment in power generation capacity expansion is difficult given the competing objectives for power producers (i.e. minimization of investment costs and maximization of reliability); uncertainty in a number of parameters (i.e.\ costs, demand, regulation), physical and technical constraints, deregulated market structure (for some areas), and, large and lumpy investments, to name a few. 
-	One tool used in the long-term power planning process is Generation Expansion Planning (GEP) problem, which provides a framework to optimize generation investment.
+\section{Introduction}
+Planning and investment in power generation capacity expansion is difficult given the competing objectives for power producers (i.e. minimization of investment costs and maximization of reliability); uncertainty in a number of parameters (i.e.\ costs, demand, regulation), physical and technical constraints, complex mix of regulated and deregulated market structure across the country, and, large and lumpy investments, to name a few. 
+One tool used in the long-term power planning process is Generation Expansion Planning (GEP) problem, which provides a framework to optimize generation investment.
 	
-	The GEP problem determines how best to meet expected future demand through the selection of plant size, type, and location, as well as timing over a planning horizon, usually between 10 - 30 years \parencite{hemmati:2013ab}. 
-	To ensure that adequacy requirements (i.e., minimum level of service) are maintained the GEP problem formulation typically includes reliability constraints.
-	Reliability and adequacy are considered before stability and fault analysis and are a necessary component of any long-term planning process; otherwise, there is no guarantee of having adequate supply to meet system demand.
-
-	The determination of the adequate generation supply capacity can be divided into two areas: static and operating capacity requirements \parencite{billinton1984reliability}.
-	In this study, we focus on the static capacity requirement, which is the capacity that must be planned and installed in advance of system demand (i.e., as a part of a long-term planning process) \parencite{billinton1984reliability}.
-	Static capacity must be able to provide for outages and regularly scheduled maintenance, in addition to anticipated load growth \parencite{billinton1984reliability}.
-	Operating capacity, which we mention only for completeness, determines the capacity necessary to meet actual short-term load and is used in different frameworks, such as unit commitment problems \parencite{billinton1984reliability}.
+The GEP model determines how best to meet expected future demand through the selection of plant size, production technology, and location, as well as timing over a planning horizon, usually between 10 - 30 years \parencite{hemmati:2013ab}. 
+To ensure that adequacy requirements (i.e., minimum level of service) are maintained the GEP problem formulation typically includes reliability constraints.\footnote{Reliability and adequacy are considered early in the planning process, typically well before stability and fault analysis. These factors are a necessary component of any long-term planning process; otherwise, there is no guarantee of having adequate supply to meet system demand.}\footnote{The determination of the adequate generation supply capacity can be divided into two areas: static and operating capacity requirements \parencite{billinton1984reliability}.
+In this study, we focus on the static capacity requirement, which is the capacity that must be planned and installed in advance of system demand (i.e., as a part of a long-term planning process) \parencite{billinton1984reliability}.
+Static capacity must be able to provide for outages and regularly scheduled maintenance, in addition to anticipated load growth \parencite{billinton1984reliability}.
+Operating capacity, which we mention only for completeness, determines the capacity necessary to meet actual short-term load and is used in different frameworks, such as unit commitment problems \parencite{billinton1984reliability}.}
 	 
-	Reliability is usually incorporated into GEP models using either probabilistic or deterministic methods \parencite{aghaei:2013aa}. 
-	Deterministic criteria include a planning reserve margin, which could be one of several measures including, setting the reserve margin to the size of the largest generation unit, percentage of system capacity, etc. 
-	One criticism of the deterministic approach is that it doesn't account for the stochastic nature of unit behavior or other factors that influence system behavior \parencite{aghaei:2013aa}.
-	As a result, deterministic criteria can lead to over investment or insufficient system adequacy in GEP problem formulation \parencite{aghaei:2013aa}.  
+Reliability is usually incorporated into GEP models using either probabilistic or deterministic methods \parencite{aghaei:2013aa}. 
+Deterministic criteria include a planning reserve margin, which could be one of several measures including, setting the reserve margin to the size of the largest generation unit, percentage of system capacity, etc. 
+One criticism of the deterministic approach is that it doesn't account for the stochastic nature of unit behavior or other factors that influence system behavior \parencite{aghaei:2013aa}.
+As a result, deterministic criteria can lead to over investment or insufficient system adequacy in GEP problem formulation \parencite{aghaei:2013aa}.  
 	
-	Generation adequacy can also be incorporated through the use of probabilistic measures. 
-	Four methods are traditionally used to incorporate reliability into the GEP formulation: Loss of Load Expected (LOLE), Loss of Load Probability (LOLP), Loss of Load Cost (LOLC), and Expected energy not served (EENS).
+Generation adequacy can also be incorporated through the use of probabilistic measures. 
+Four methods are traditionally used to incorporate reliability into the GEP formulation: Loss of Load Expected (LOLE), Loss of Load Probability (LOLP), Loss of Load Cost (LOLC), and Expected energy not served (EENS).
 	
-	The LOLE is the expected number of hours in which demand is not satisfied and is calculated as $LOLE = \sum_{k=1}^S P_k\left(C_T - L_k \right)\times t_k$, where there are S sub-periods and each sub-period is of length $t_k$.
-	Usually, the modeler will set a constraint of the maximum number of hours in a year in which the load is not served due to outages of the generation system \parencite{phoon:2006}.
-	The LOLP is the long-run probability of power system demand exceeding the capacity available \parencite{endrenyi:1978}.  
-	LOLP can be calculated using daily peak load (i.e. hour demand for a 24 hour period) or using daily peak loads for a 1-year period using a load duration curve \parencite{endrenyi:1978}.
-	LOLP and LOLE are related by the equation $LOLE = LOLP \times T$, where T represents the number of hours.   
-	It is typically built recursively using the Capacity Outage Cumulative Probability Table (COCPT). 
-	COCPT assumes that the failure of a unit is ``independent of the operating level, system load, and the outage pattern of other units'' (Goel presentation, 2011). 
-	Each entry of the table represents the probability of a capacity outage.
-	The probability then of not meeting demand is the cumulative probability of having an outage lager than the $Total Capacity - Demand$ \parencite[p78]{pereira2010decision}.
-	EENS is the expectation of the energy that the system is not capable of serving and is calculated as the following $EENS = P_k \left(C_T - L_k \right)\times \left(C_T- L_k \right)$. 
-	LOLC \ldots
-	Typically, the LOLE and EENS are generated using Monte Carlo techniques \parencite{billinton1996reliability, li2012uncertainty}.
+The LOLE is the expected number of hours in which demand is not satisfied and is calculated as $LOLE = \sum_{k=1}^S P_k\left(C_T - L_k \right)\times t_k$, where there are S sub-periods and each sub-period is of length $t_k$.
+Usually, the modeler will set a constraint of the maximum number of hours in a year in which the load is not served due to outages of the generation system \parencite{phoon:2006}.
+
+LOLC \ldots
+
+The LOLP is the long-run probability of power system demand exceeding the capacity available \parencite{endrenyi:1978}.  
+LOLP can be calculated using daily peak load (i.e. hour demand for a 24 hour period) or using daily peak loads for a 1-year period using a load duration curve \parencite{endrenyi:1978}.
+LOLP and LOLE are related by the equation $LOLE = LOLP \times T$, where T represents the number of hours.   
+It is typically built recursively using the Capacity Outage Cumulative Probability Table (COCPT). 
+COCPT assumes that the failure of a unit is ``independent of the operating level, system load, and the outage pattern of other units'' (Goel presentation, 2011). 
+Each entry of the table represents the probability of a capacity outage.
+The probability then of not meeting demand is the cumulative probability of having an outage lager than the $Total Capacity - Demand$ \parencite[p78]{pereira2010decision}.
+EENS is the expectation of the energy that the system is not capable of serving and is calculated as the following $EENS = P_k \left(C_T - L_k \right)\times \left(C_T- L_k \right)$. 
+
+Typically, the LOLE and EENS are generated using Monte Carlo techniques \parencite{billinton1996reliability, li2012uncertainty}.
 	Given it simplicity LOLE has been extensively used in the past, however, EENS does have certain advantages including that it encompasses the degree of the deficiency, as well as the likelihood \parencite[p622]{murugan2009nsga}. 
 	
 	In the GEP formulation framework the modeler would select an acceptable level of service (i.e., industry standard is an insufficient capacity with a frequency of 1-in-10 years)\parencite{}. 
@@ -56,6 +64,38 @@
 	The reliability metric (i.e., LOLE, LOLP, EENS, etc.) are highly sensitive to the EFOR parameter (i.e., a small change in the parameter estimate can lead to large changes in the reliability metric. 
 	GEP models have not explored the solution space that surrounds the EFOR parameter estimate. \footnote{The exploration of the uncertainty in the EFOR parameter and its impact on the optimal long-term generation mix is explored in Essay 2.}
 	A significant literature exists exploring the uncertainty around the EFOR parameter estimates.
+The generation expansion planning problem (GEP) is a long-term planning model for the optimal 
+
+
+\section{Methodology}
+The generation expansion planning (GEP) model we present here is based upon a toy model presented in (Ehrenmann and Smeers 2011). We build upon the toy model through the inclusion of (i) multiple nodes, (ii) a complete transmission network, and (iii) stochastic demand, fuel inputs, and reliability. 
+The individual generator is a price taking firm that maximizes profit by choosing an optimal capacity investment $(y_{hi})$ and generation $(x_{hli})$ given marginal costs of production $(C_h)$, electricity prices $(pi_{li})$, and investment costs $(I_{h})$.
+Demand varies across the year using a load duration curve representation that decomposes annual demand into several load segments. 
+In the next few sections we walk the reader through model development activities to date. 
+Model development has proceeded incrementally to ensure the accuracy of results. 
+
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+                    thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
+	\node[main node](1){1};
+	\node[main node](2)[below left of=1]{2};
+	\node[main node](3)[below right of=1]{3};
+
+	\path[every node/.style={font=\sffamily\small}]
+	 (1) edge [bend left] node[right] {$P_{13}$} (3)
+	 edge [bend right] node[left] {$P_{12}$} (2)
+	 edge [loop above] node[above] {$P_{11}$ }(1)
+	 (2) edge node [right] {$P_{21}$} (1)
+	 edge node [above] {$P_{23}$} (3)
+ 	 edge [loop left] node[left] {$P_{22}$} (2)
+	 (3) edge node [left] {$P_{31}$} (1)
+	 edge [loop right] node[right]{$P_{33}$} (3)	
+	 edge [bend left] node[below]{$P_{32}$}(2);
+\end{tikzpicture}
+
+\subsection{Introduction}
+	
+	
+
 	
 	Addressing the inherent uncertainty of the EFOR parameter is a well studied problem even if the results aren't well incorporated into the typical GEP formulation. 
 	A significant literature exists that has continued to evolve and incorporate advancements in other fields of study. 
