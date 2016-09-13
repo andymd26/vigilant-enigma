@@ -41,6 +41,8 @@ As a result, deterministic criteria can lead to over investment or insufficient 
 	
 Generation adequacy can also be incorporated through the use of probabilistic measures. 
 Four methods are traditionally used to incorporate reliability into the GEP formulation: Loss of Load Expected (LOLE), Loss of Load Probability (LOLP), Loss of Load Cost (LOLC), and Expected energy not served (EENS).
+In the GEP formulation framework the modeler would select an acceptable level of service (i.e., industry standard is an insufficient capacity with a frequency of 1-in-10 years)\parencite{}. 
+The model would then calculate the appropriate reliability statistic using the EFOR (i.e., the number of hours of unit failure as a percentage of all available hours) for each generation unit type and size.
 	
 The LOLE is the expected number of hours in which demand is not satisfied and is calculated as $LOLE = \sum_{k=1}^S P_k\left(C_T - L_k \right)\times t_k$, where there are S sub-periods and each sub-period is of length $t_k$.
 Usually, the modeler will set a constraint of the maximum number of hours in a year in which the load is not served due to outages of the generation system \parencite{phoon:2006}.
@@ -57,10 +59,9 @@ The probability then of not meeting demand is the cumulative probability of havi
 EENS is the expectation of the energy that the system is not capable of serving and is calculated as the following $EENS = P_k \left(C_T - L_k \right)\times \left(C_T- L_k \right)$. 
 
 Typically, the LOLE and EENS are generated using Monte Carlo techniques \parencite{billinton1996reliability, li2012uncertainty}.
-	Given it simplicity LOLE has been extensively used in the past, however, EENS does have certain advantages including that it encompasses the degree of the deficiency, as well as the likelihood \parencite[p622]{murugan2009nsga}. 
+Given it simplicity LOLE has been extensively used in the past, however, EENS does have certain advantages including that it encompasses the degree of the deficiency, as well as the likelihood \parencite[p622]{murugan2009nsga}. 
 	
-	In the GEP formulation framework the modeler would select an acceptable level of service (i.e., industry standard is an insufficient capacity with a frequency of 1-in-10 years)\parencite{}. 
-	The model would then calculate the appropriate reliability statistic using the EFOR (i.e., the number of hours of unit failure as a percentage of all available hours) for each generation unit type and size.
+
 	The reliability metric (i.e., LOLE, LOLP, EENS, etc.) are highly sensitive to the EFOR parameter (i.e., a small change in the parameter estimate can lead to large changes in the reliability metric. 
 	GEP models have not explored the solution space that surrounds the EFOR parameter estimate. \footnote{The exploration of the uncertainty in the EFOR parameter and its impact on the optimal long-term generation mix is explored in Essay 2.}
 	A significant literature exists exploring the uncertainty around the EFOR parameter estimates.
