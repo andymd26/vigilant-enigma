@@ -25,6 +25,60 @@ The contribution of our model to the literature is in the assessment of uncertai
 We anticipate that the composition, costs, and reliability resulting from our method will be quite different than existing methods, which rely on single point parameter estimates. 
 
 \section{Introduction}
+The generation expansion problem (GEP) \ldots [insert typical write-up]
+
+Uncertainty incorporation in the generation expansion planning problem
+
+Two general approaches are used to assess power system adequacy: deterministic and probabilistic criteria. 
+Deterministic criteria include a planning reserve margin, which could be one of several measures including, setting the reserve margin to the size of the largest generation unit, percentage of system capacity, etc. 
+However, deterministic approaches (e.g., planning reserve margin) do not account for stochasticity in unit behavior, account for unit size, etc.
+As a result, deterministic methods can lead to over-investment or inadequate system reliability \parencite{aghaei:2013aa}.
+
+Instead, stochastic methods naturally account for randomness such as unit forced outage rates, size, etc. but at the expense of an increasing computational burden \parencite{aghaei:2013aa}.   	
+The adequacy of the deployed resources to meet demand can be incorporated into the GEP problem using: Loss of Load Expected (LOLE)\footnote{The LOLE is the expected number of hours in which demand is not satisfied and is calculated as $LOLE = \sum_{k=1}^S P_k\left(C_T - L_k \right)\times t_k$, where there are S sub-periods and each sub-period is of length $t_k$.}, Loss of Load Probability (LOLP)\footnote{The LOLP is the long-run probability of power system demand exceeding the capacity available \parencite{endrenyi:1978}.  
+LOLP can be calculated using daily peak load (i.e. hour demand for a 24 hour period) or using daily peak loads for a 1-year period using a load duration curve \parencite{endrenyi:1978}.}, Loss of Load Cost (LOLC), and Expected energy not served (EENS)\footnote{EENS is the expectation of the energy that the system is not capable of serving and is calculated as the following $EENS = P_k \left(C_T - L_k \right)\times \left(C_T- L_k \right)$.}.
+
+Given it simplicity LOLE has been extensively used in the past, however, EENS does have certain advantages including that it encompasses the degree of the deficiency, as well as the likelihood \parencite[p622]{murugan2009nsga}.
+Typically, the LOLE and EENS are generated using Monte Carlo techniques \parencite{billinton1996reliability, li2012uncertainty}. 
+It is typically built recursively using the Capacity Outage Cumulative Probability Table (COCPT).\footnote{COCPT assumes that the failure of a unit is ``independent of the operating level, system load, and the outage pattern of other units'' (Goel presentation, 2011).} 
+
+
+Assessing system adequacy using stochastic methods can lead to computational issues given the widely held belief that the GEP is actually a mixed integer non-linear program \parencite{aghaei:2013aa}.
+As a result, several methods were developed to assess system adequacy.
+\cite{} proposed the 'Z-Method' to evaluate system adequacy in the GEP problem, which replaces the stochastic adequacy assessment metric (i.e., loss-of-load probability (LOLP)) with a new constraint. 
+The approach accounts for unit forced outage rates (FOR), system adequacy targets\footnote{In the GEP formulation framework the modeler would select an acceptable level of service (i.e., industry standard is an insufficient capacity with a frequency of 1-in-10 years)\parencite{}. 
+The model would then calculate the appropriate reliability statistic using the EFOR (i.e., the number of hours of unit failure as a percentage of all available hours) for each generation unit type and size.}, uncertainty in expected load growth, as well as the size, type and number of units in the production mix \parencite{aghaei:2013aa, \ldots}. 
+
+The goal of this paper is to formulate the GEP problem as a \ldots
+The reliability metric (i.e., LOLE, LOLP, EENS, etc.) are highly sensitive to the EFOR parameter (i.e., a small change in the parameter estimate can lead to large changes in the reliability metric. 
+GEP models have not explored the solution space that surrounds the EFOR parameter estimate. 
+
+The rest of this paper is organized as follows: in the second section we propose the mathematical formulation of the \ldots [insert problem type] problem. 
+The third section \ldots [solution algorithm discussion?]
+In the fourth section we introduce our case studies before we discuss the results of our model formulation.
+In the final section we discuss some relevant conclusions of our work. 
+
+\section{\ldots Generation Expansion Planning problem formulation}
+\subsection{Objective function \nopunct}
+
+\subsection{Constraints \nopunct}
+\subsubsection{Maximum construction limit \nopunct}
+This constraint is a maximum allowable number, capacity, or investment amount for new generation sources to be built during period \textit{t} given limited resources (i.e., capital, manpower, space, etc.). 
+\subsubsection{LOLP constraint \nopunct}
+\begin{equation}
+\textit{lolpc}_{t} \leq \textit{lolps}_{t} \forall t \in T 
+\end{equation}
+
+The $\textit{lolpc}_{t}$ is the loss-of-load probability at stage \textit{t} and $\textit{lolps}_{t}$ is the loss-of-load probability limit (i.e., the reliability target selected by the user) \parencite{dragoon:2006aa}. 
+The equivalent Z constraint is \ldots
+
+
+\subsubsection{Non-negativity constraints \nopunct}
+
+\section{\ldots [Name of solution algorithm}
+
+
+As a result, 
 Planning and investment in power generation capacity expansion is difficult given the competing objectives for power producers (i.e. minimization of investment costs and maximization of reliability); uncertainty in a number of parameters (i.e.\ costs, demand, regulation), physical and technical constraints, complex mix of regulated and deregulated market structure across the country, and, large and lumpy investments, to name a few. 
 One tool used in the long-term power planning process is Generation Expansion Planning (GEP) problem, which provides a framework to optimize generation investment.
 	
@@ -34,38 +88,7 @@ In this study, we focus on the static capacity requirement, which is the capacit
 Static capacity must be able to provide for outages and regularly scheduled maintenance, in addition to anticipated load growth \parencite{billinton1984reliability}.
 Operating capacity, which we mention only for completeness, determines the capacity necessary to meet actual short-term load and is used in different frameworks, such as unit commitment problems \parencite{billinton1984reliability}.}
 	 
-Reliability is usually incorporated into GEP models using either probabilistic or deterministic methods \parencite{aghaei:2013aa}. 
-Deterministic criteria include a planning reserve margin, which could be one of several measures including, setting the reserve margin to the size of the largest generation unit, percentage of system capacity, etc. 
-One criticism of the deterministic approach is that it doesn't account for the stochastic nature of unit behavior or other factors that influence system behavior \parencite{aghaei:2013aa}.
-As a result, deterministic criteria can lead to over investment or insufficient system adequacy in GEP problem formulation \parencite{aghaei:2013aa}.  
-	
-Generation adequacy can also be incorporated through the use of probabilistic measures. 
-Four methods are traditionally used to incorporate reliability into the GEP formulation: Loss of Load Expected (LOLE), Loss of Load Probability (LOLP), Loss of Load Cost (LOLC), and Expected energy not served (EENS).
-In the GEP formulation framework the modeler would select an acceptable level of service (i.e., industry standard is an insufficient capacity with a frequency of 1-in-10 years)\parencite{}. 
-The model would then calculate the appropriate reliability statistic using the EFOR (i.e., the number of hours of unit failure as a percentage of all available hours) for each generation unit type and size.
-	
-The LOLE is the expected number of hours in which demand is not satisfied and is calculated as $LOLE = \sum_{k=1}^S P_k\left(C_T - L_k \right)\times t_k$, where there are S sub-periods and each sub-period is of length $t_k$.
-Usually, the modeler will set a constraint of the maximum number of hours in a year in which the load is not served due to outages of the generation system \parencite{phoon:2006}.
 
-LOLC \ldots
-
-The LOLP is the long-run probability of power system demand exceeding the capacity available \parencite{endrenyi:1978}.  
-LOLP can be calculated using daily peak load (i.e. hour demand for a 24 hour period) or using daily peak loads for a 1-year period using a load duration curve \parencite{endrenyi:1978}.
-LOLP and LOLE are related by the equation $LOLE = LOLP \times T$, where T represents the number of hours.   
-It is typically built recursively using the Capacity Outage Cumulative Probability Table (COCPT). 
-COCPT assumes that the failure of a unit is ``independent of the operating level, system load, and the outage pattern of other units'' (Goel presentation, 2011). 
-Each entry of the table represents the probability of a capacity outage.
-The probability then of not meeting demand is the cumulative probability of having an outage lager than the $Total Capacity - Demand$ \parencite[p78]{pereira2010decision}.
-EENS is the expectation of the energy that the system is not capable of serving and is calculated as the following $EENS = P_k \left(C_T - L_k \right)\times \left(C_T- L_k \right)$. 
-
-Typically, the LOLE and EENS are generated using Monte Carlo techniques \parencite{billinton1996reliability, li2012uncertainty}.
-Given it simplicity LOLE has been extensively used in the past, however, EENS does have certain advantages including that it encompasses the degree of the deficiency, as well as the likelihood \parencite[p622]{murugan2009nsga}. 
-	
-
-	The reliability metric (i.e., LOLE, LOLP, EENS, etc.) are highly sensitive to the EFOR parameter (i.e., a small change in the parameter estimate can lead to large changes in the reliability metric. 
-	GEP models have not explored the solution space that surrounds the EFOR parameter estimate. \footnote{The exploration of the uncertainty in the EFOR parameter and its impact on the optimal long-term generation mix is explored in Essay 2.}
-	A significant literature exists exploring the uncertainty around the EFOR parameter estimates.
-The generation expansion planning problem (GEP) is a long-term planning model for the optimal 
 
 
 \section{Methodology}
@@ -177,6 +200,9 @@ Model development has proceeded incrementally to ensure the accuracy of results.
 	Finally, we discuss next steps. 
 		
 \subsection{Data}	
+One approach would be to test the methods on the IEEE Reliability Test system \parencite{billinton:1994aa}. 
+We use the IEEE Reliability Test System as an example system topology \parencite{}. 
+
 	The changing electricity generation mix requires that industry personnel gain more experience with ``generating resource technology behavior, operating characteristics, and optimal planning approaches in order to properly assess reliability or improve performance analysis'' \parencite{nerc2011gads}. 
 	Understanding the reliability and performance of existing and new production technologies is necessary to understand the reliability of the bulk power system in North America \parencite{nerc2011gads}. 
 	It is also important to electric utilities since poor performing units can result in higher operating costs (i.e., loading units out of economic order), a need to purchase power, and/or installing additional capacity \parencite{}(GADS Introduction material).
@@ -201,13 +227,7 @@ Model development has proceeded incrementally to ensure the accuracy of results.
 	The event report will include informaiton on the event magnitude, primary cause, and, additional causes or components worked during the event \parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015, pIII-2).
 	In Figure \ref{fig:unit.states.GADS} we show the Unit States diagram from the \parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015, pIII-5).
 	
-	\begin{figure}[H]
-		\centering
-		\caption{Generating unit states. Source: \parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015, pIII-5)}
-		\includegraphics[scale = 0.550]{unit_states_GADS.png}
-		\label{fig:unit.states.GADS}
-	\end{figure}
-	
+
 	Resources can first be categorized by whether they are active or inactive.
 	Inactive resources are in one of three potential states: inactive reserve (IR), mothballed (MB), and, retired (RU). 
 	An inactive reserve, mothballed, or retired unit is a unit whereby the unit is unavailable for an extended period of time for reasons unrelated to the equipment \parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015, pIII-5). 
