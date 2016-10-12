@@ -9,6 +9,7 @@
 % \addbibresource[location = local, type = file]{C:/Users/bloh356/Google Drive/Library/Library.bib}
 \addbibresource[location = local, type = file]{/Users/bloh356/Google Drive/Library/Library.bib}
 
+
 \graphicspath {{figures/}}
 
 \title{Uncertainty in reliability parameter estimates: Inclusion in the Generation Expansion Planning (GEP) problem}
@@ -25,6 +26,7 @@ The contribution of our model to the literature is in the assessment of uncertai
 We anticipate that the composition, costs, and reliability resulting from our method will be quite different than existing methods, which rely on single point parameter estimates. 
 
 \section{Introduction}
+The GEP model determines how best to meet expected future demand through the selection of plant size, production technology, and location, as well as timing over a planning horizon, usually between 10 - 30 years \parencite{hemmati:2013ab}. 
 The generation expansion problem (GEP) \ldots [insert typical write-up]
 
 Uncertainty incorporation in the generation expansion planning problem
@@ -34,7 +36,8 @@ Deterministic criteria include a planning reserve margin, which could be one of 
 However, deterministic approaches (e.g., planning reserve margin) do not account for stochasticity in unit behavior, account for unit size, etc.
 As a result, deterministic methods can lead to over-investment or inadequate system reliability \parencite{aghaei:2013aa}.
 
-Instead, stochastic methods naturally account for randomness such as unit forced outage rates, size, etc. but at the expense of an increasing computational burden \parencite{aghaei:2013aa}.   	
+Instead, stochastic methods naturally account for randomness such as unit forced outage rates, size, etc. but at the expense of an increasing computational burden \parencite{aghaei:2013aa}.  
+In general probabilistic metrics measure the duration, intensity or frequency in which demand exceeds the resources available at that time \parencite{dragoon:2006aa}.  	
 The adequacy of the deployed resources to meet demand can be incorporated into the GEP problem using: Loss of Load Expected (LOLE)\footnote{The LOLE is the expected number of hours in which demand is not satisfied and is calculated as $LOLE = \sum_{k=1}^S P_k\left(C_T - L_k \right)\times t_k$, where there are S sub-periods and each sub-period is of length $t_k$.}, Loss of Load Probability (LOLP)\footnote{The LOLP is the long-run probability of power system demand exceeding the capacity available \parencite{endrenyi:1978}.  
 LOLP can be calculated using daily peak load (i.e. hour demand for a 24 hour period) or using daily peak loads for a 1-year period using a load duration curve \parencite{endrenyi:1978}.}, Loss of Load Cost (LOLC), and Expected energy not served (EENS)\footnote{EENS is the expectation of the energy that the system is not capable of serving and is calculated as the following $EENS = P_k \left(C_T - L_k \right)\times \left(C_T- L_k \right)$.}.
 
@@ -82,7 +85,7 @@ As a result,
 Planning and investment in power generation capacity expansion is difficult given the competing objectives for power producers (i.e. minimization of investment costs and maximization of reliability); uncertainty in a number of parameters (i.e.\ costs, demand, regulation), physical and technical constraints, complex mix of regulated and deregulated market structure across the country, and, large and lumpy investments, to name a few. 
 One tool used in the long-term power planning process is Generation Expansion Planning (GEP) problem, which provides a framework to optimize generation investment.
 	
-The GEP model determines how best to meet expected future demand through the selection of plant size, production technology, and location, as well as timing over a planning horizon, usually between 10 - 30 years \parencite{hemmati:2013ab}. 
+
 To ensure that adequacy requirements (i.e., minimum level of service) are maintained the GEP problem formulation typically includes reliability constraints.\footnote{Reliability and adequacy are considered early in the planning process, typically well before stability and fault analysis. These factors are a necessary component of any long-term planning process; otherwise, there is no guarantee of having adequate supply to meet system demand.}\footnote{The determination of the adequate generation supply capacity can be divided into two areas: static and operating capacity requirements \parencite{billinton1984reliability}.
 In this study, we focus on the static capacity requirement, which is the capacity that must be planned and installed in advance of system demand (i.e., as a part of a long-term planning process) \parencite{billinton1984reliability}.
 Static capacity must be able to provide for outages and regularly scheduled maintenance, in addition to anticipated load growth \parencite{billinton1984reliability}.
