@@ -6,8 +6,8 @@
 \usepackage{pgfgantt} % load Gant chart package
 \usepackage{array}
 \usepackage[style = authoryear, sorting = nyt, backend = biber]{biblatex}
-% \addbibresource[location = local, type = file]{C:/Users/bloh356/Google Drive/Library/Library.bib}
-\addbibresource[location = local, type = file]{/Users/bloh356/Google Drive/Library/Library.bib}
+\addbibresource[location = local, type = file]{C:/Users/bloh356/Google Drive/Library/Library.bib}
+% \addbibresource[location = local, type = file]{/Users/bloh356/Google Drive/Library/Library.bib}
 
 
 \graphicspath {{figures/}}
@@ -26,10 +26,31 @@ The contribution of our model to the literature is in the assessment of uncertai
 We anticipate that the composition, costs, and reliability resulting from our method will be quite different than existing methods, which rely on single point parameter estimates. 
 
 \section{Introduction}
+Investments in energy production capacity are subject to partial or complete irreversibility (i.e., large, sunk cost that is not particularly fungible) and are large, high-risk investments facing uncertain operating environments (i.e., economic and regulatory uncertainty)\parencite{bakirtzis:2012aa}. 
+The Generation Expansion Planning (GEP) problem has been employed extensively to manage these risks while selecting an optimal production portfolio. 
 The GEP model determines how best to meet expected future demand through the selection of plant size, production technology, and location, as well as timing over a planning horizon, usually between 10 - 30 years \parencite{hemmati:2013ab}. 
-The generation expansion problem (GEP) \ldots [insert typical write-up]
+The GEP problem is well studied, from a variety of perspectives including: solution algorithms, incorporation of new production technologies, uncertainty characterization, reliability, time horizon, etc. \parencite{hemmati:2013ab}.
+The GEP problem is a large-scale, highly-constrained mixed-integer linear program (MINLP) that requires complete enumeration (i.e., investigation of every combination of assets over the time horizon) to identify the global optimum \parencite{bakirtzis:2012aa}.  
+The inability to undertake such an exercise has led to the development of simplifications to reduce the computational load of the problem. 
 
-Uncertainty incorporation in the generation expansion planning problem
+Two approaches are generally used to determine the solution to the GEP using micro-approach modeling: a centralized or decentralized approach \parencite{bakirtzis:2012aa}.\footnote{The micro-approach incorporates a high amount of model complexity that require operations research or meta-heuristic methods to solve but with the caveate that there is no guarantee that global optimality is achieved. Macro-modeling approaches reduce complexity by ignoring those features and constraints.} 
+The centralized approach is appropriate in monopoly situations (i.e., a monopoly utility determining least cost expansion plans) or in deregulated markets by governing or regulating authorities to better design markets and policies \parencite{bakirtzis:2012aa}.
+Solution methods for the centralized problem include stochastic dynamic programming (SDP)\parencite{}, non-linear programming (NLP)\parencite{}, evolutionary programming \parencite{}, multi-objective programming \parencite{}, mixed-integer linear programming (MILP) \parencite{}, in addition to other approaches \parencite{}\parencite{bakirtzis:2012aa}.  
+[Insert the citations from \cite{bakirtzis:2012aa}.]
+The decentralized approach accounts for the behavior of market participants, usually in a deregulated market framework \parencite{bakirtzis:2012aa}. 
+For a more detailed discussion of the decentralized approach the reader is directed to \cite{bakirtzis:2012aa}. 
+
+In this paper the centralized GEP problem is formulated as a \ldots
+
+The proposed model is evaluated using the IEEE 14 and 30 bus test system \parencite{christie:2009aa}.\footnote{We downloaded the power system data for each of the 14, 30, 57, 188, and 300 bus test systems.}  
+[Talk with Jeremy about the appropriate test system].
+Of particular interest is how uncertainty is incorporated into the GEP model formulation, as well as the uncertainties that have thus far been considered. 
+Uncertainty incorporation in the generation expansion planning problem has included price volatility, reliability of generation units, load forecast, electricity prices, and costs (i.e., fixed and variable) of each power production technology \cite{hemmati:2013ab, pereira2010decision, pereira2011generation}. 
+A common approach to dealing with uncertainties in the GEP framework is Monte Carlo methods \parencite{pereira2010decision}.
+Thus far 
+
+
+Reliability in GEP problem formulation \ldots \parencite{hemmati:2013ab}. 
 
 Two general approaches are used to assess power system adequacy: deterministic and probabilistic criteria. 
 Deterministic criteria include a planning reserve margin, which could be one of several measures including, setting the reserve margin to the size of the largest generation unit, percentage of system capacity, etc. 
