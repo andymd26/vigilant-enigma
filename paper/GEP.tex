@@ -13,7 +13,7 @@
 \graphicspath {{figures/}}
 
 \title{Uncertainty in reliability parameter estimates: Inclusion in the Generation Expansion Planning (GEP) problem}
-\author{Andrew Blohm}
+\author{Andrew Blohm, Steve Gabriel}
 \date{\today}
 
 \begin{document}
@@ -25,6 +25,18 @@ We anticipate that traditional methods significantly underestimate the riskiness
 The contribution of our model to the literature is in the assessment of uncertainty and nonstationarity of the outage rate parameter on the optimal resource mix (as compared to existing methods). 
 We anticipate that the composition, costs, and reliability resulting from our method will be quite different than existing methods, which rely on single point parameter estimates. 
 
+\section{Nomenclature}
+\begin{equation*}
+\begin{split}
+\textit{Indices and sets} \\
+\textit{i} \text{(I)} \text{Index set of units} \\
+\textit{t} \text{(T)} \text{Index set of time periods} \\
+\textit{Parameters} \\
+\textit{Variables (continuous)} \\
+\textit{Variables (binary)} \\
+\end{split}
+\end{equation*}
+
 \section{Introduction}
 Investments in energy production capacity are subject to partial or complete irreversibility (i.e., large, sunk cost that is not particularly fungible) and are large, high-risk investments facing uncertain operating environments (i.e., economic and regulatory uncertainty)\parencite{bakirtzis:2012aa}. 
 The Generation Expansion Planning (GEP) problem has been employed extensively to manage these risks while selecting an optimal production portfolio. 
@@ -33,6 +45,14 @@ The GEP problem is well studied, from a variety of perspectives including: solut
 The GEP problem is a large-scale, highly-constrained mixed-integer linear program (MINLP) that requires complete enumeration (i.e., investigation of every combination of assets over the time horizon) to identify the global optimum \parencite{bakirtzis:2012aa}.  
 The inability to undertake such an exercise has led to the development of simplifications to reduce the computational load of the problem. 
 
+A number of reviews have been completed that systematically organize the GEP literature.
+\parencite{bakirtzis:2012aa, hemmati:2013ab}(Kagiannas et al., 2004; Zhu and Chow, 1997; Hobbs, 1995)\footnote{ Zhu, J., and Chow, M., A Review of Emerging Techniques on Generation Expansion
+Planning, IEEE Transactions on Power Systems, Vol.12, No.4, 1997; Hobbs, B.F., Optimization Methods for Electric Utility Resource Planning, European
+Journal of Operational Research, 83, 1-20, 1995; 
+Kagiannas, A. G., Askounis, D.Th., and Psarras, J., Power Generation Planning: A Survey
+from Monopoly to Competition, International Journal of Electrical Power and Energy
+Systems, 26, 413-421, 2004}
+
 Two approaches are generally used to determine the solution to the GEP using micro-approach modeling: a centralized or decentralized approach \parencite{bakirtzis:2012aa}.\footnote{The micro-approach incorporates a high amount of model complexity that require operations research or meta-heuristic methods to solve but with the caveate that there is no guarantee that global optimality is achieved. Macro-modeling approaches reduce complexity by ignoring those features and constraints.} 
 The centralized approach is appropriate in monopoly situations (i.e., a monopoly utility determining least cost expansion plans) or in deregulated markets by governing or regulating authorities to better design markets and policies \parencite{bakirtzis:2012aa}.
 Solution methods for the centralized problem include stochastic dynamic programming (SDP)\parencite{}, non-linear programming (NLP)\parencite{}, evolutionary programming \parencite{}, multi-objective programming \parencite{}, mixed-integer linear programming (MILP) \parencite{}, in addition to other approaches \parencite{}\parencite{bakirtzis:2012aa}.  
@@ -40,8 +60,16 @@ Solution methods for the centralized problem include stochastic dynamic programm
 The decentralized approach accounts for the behavior of market participants, usually in a deregulated market framework \parencite{bakirtzis:2012aa}. 
 For a more detailed discussion of the decentralized approach the reader is directed to \cite{bakirtzis:2012aa}. 
 
-In this paper the centralized GEP problem is formulated as a \ldots
+\cite{bakirtzis:2012aa} incorporates system level reliability using the value of lost load (VLL) in the problem objective function (i.e., mixed-integer linear program) while addressing stochasticity through scenario exploration. 
+A simple model is used whereby the equivalent forced outage rate (EFOR) is used to derate the maximum output of each unit \parencite{bakirtzis:2012aa}. 
+\cite{tekiner:2010aa} developed a two-stage mixed-integer linear program that addresses stochasticity in the forced outage rates through the development of scenarios using Monte Carlo methods. 
 
+Each of the above papers fails to include the uncertainty and potential non-stationarity in the unit forced outage rates (FOR) in the calculation of system level reliability, which \cite{} [hopefully my own paper] has shown can be significant. 
+The failure to include uncertainty analysis around the forced outage rate parameter means that the results of our analysis aren't internalizing the true risk of failure and as a result, existing methods are actually operating at higher risk levels. 
+ 
+In this paper the centralized GEP problem is formulated as a \ldots
+[stochastic mixed-integer linear program, genetic algorithm, \ldots]. 
+We incorporate the system reliability measure through the 
 The proposed model is evaluated using the IEEE 14 and 30 bus test system \parencite{christie:2009aa}.\footnote{We downloaded the power system data for each of the 14, 30, 57, 188, and 300 bus test systems.}  
 [Talk with Jeremy about the appropriate test system].
 Of particular interest is how uncertainty is incorporated into the GEP model formulation, as well as the uncertainties that have thus far been considered. 
@@ -49,6 +77,38 @@ Uncertainty incorporation in the generation expansion planning problem has inclu
 A common approach to dealing with uncertainties in the GEP framework is Monte Carlo methods \parencite{pereira2010decision}.
 Thus far 
 
+\section{Data}
+A common approach in the literature when developing a new model is to use a well studied data set. 
+In the GEP literature this is the IEEE Reliability Test system, which has a number of sizes (i.e., the number of buses in the system) \parencite{billinton:1994aa}. 
+We use the IEEE Reliability Test System \ldots [insert system size] \parencite{}. 
+
+\section{Model description and mathematical formulation}
+\subsection{Load model description}
+The system load for each period is represented using a step-wise load duration curve. 
+Demand varies across the year using a load duration curve representation that decomposes annual demand into several load segments. 
+The number of steps was chosen to accurately represent the load duration curve across the hours.
+\subsection{Energy balance constraints}
+\subsection{Unit operating cost constraints}
+\subsection{Annual budget constraints}
+\subsection{Binary constraints}
+
+\section{Results}
+The proposed model is evaluated using the \ldots bus IEEE Reliability test network \parencite{}.
+The system has \ldots nodes with total installed demand and capacities as defined in Table \ref{}. 
+We display other assumptions, such as the fuel cost and variable operations and maintenance costs in Table \ref{}.
+The average load of the system is \ldots with a peak load of \ldots.
+
+The load duration curve \ldots
+We have \ldots scenarios for the load growth: \ldots 
+
+[Insert model parameterization discussion here]
+
+
+\subsection{Computational, convergence, and feasibility issues}
+[Insert description of the computer used to solve]
+[Insert description of the number of variables and equations]
+\cite{bakirtzis} used a convergence tolerance of 0.25\% with their model taking between 7 and 18 minutes to solve. 
+\section{Discussion}
 
 Reliability in GEP problem formulation \ldots \parencite{hemmati:2013ab}. 
 
@@ -118,7 +178,7 @@ Operating capacity, which we mention only for completeness, determines the capac
 \section{Methodology}
 The generation expansion planning (GEP) model we present here is based upon a toy model presented in (Ehrenmann and Smeers 2011). We build upon the toy model through the inclusion of (i) multiple nodes, (ii) a complete transmission network, and (iii) stochastic demand, fuel inputs, and reliability. 
 The individual generator is a price taking firm that maximizes profit by choosing an optimal capacity investment $(y_{hi})$ and generation $(x_{hli})$ given marginal costs of production $(C_h)$, electricity prices $(pi_{li})$, and investment costs $(I_{h})$.
-Demand varies across the year using a load duration curve representation that decomposes annual demand into several load segments. 
+
 In the next few sections we walk the reader through model development activities to date. 
 Model development has proceeded incrementally to ensure the accuracy of results. 
 
@@ -224,8 +284,7 @@ Model development has proceeded incrementally to ensure the accuracy of results.
 	Finally, we discuss next steps. 
 		
 \subsection{Data}	
-One approach would be to test the methods on the IEEE Reliability Test system \parencite{billinton:1994aa}. 
-We use the IEEE Reliability Test System as an example system topology \parencite{}. 
+
 
 	The changing electricity generation mix requires that industry personnel gain more experience with ``generating resource technology behavior, operating characteristics, and optimal planning approaches in order to properly assess reliability or improve performance analysis'' \parencite{nerc2011gads}. 
 	Understanding the reliability and performance of existing and new production technologies is necessary to understand the reliability of the bulk power system in North America \parencite{nerc2011gads}. 
