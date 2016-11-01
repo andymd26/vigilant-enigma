@@ -25,18 +25,6 @@ We anticipate that traditional methods significantly underestimate the riskiness
 The contribution of our model to the literature is in the assessment of uncertainty and nonstationarity of the outage rate parameter on the optimal resource mix (as compared to existing methods). 
 We anticipate that the composition, costs, and reliability resulting from our method will be quite different than existing methods, which rely on single point parameter estimates. 
 
-\section{Nomenclature}
-\begin{equation*}
-\begin{split}
-\textit{Indices and sets} \\
-\textit{i} \text{(I)} \text{Index set of units} \\
-\textit{t} \text{(T)} \text{Index set of time periods} \\
-\textit{Parameters} \\
-\textit{Variables (continuous)} \\
-\textit{Variables (binary)} \\
-\end{split}
-\end{equation*}
-
 \section{Introduction}
 Investments in energy production capacity are subject to partial or complete irreversibility (i.e., large, sunk cost that is not particularly fungible) and are large, high-risk investments facing uncertain operating environments (i.e., economic and regulatory uncertainty)\parencite{bakirtzis:2012aa}. 
 The Generation Expansion Planning (GEP) problem has been employed extensively to manage these risks while selecting an optimal production portfolio. 
@@ -54,7 +42,7 @@ However, to date, the literature is bereft of an analysis of the effect of uncer
 Past studies have demonstrated that small changes in the FOR can have significant effects on the reliability of the system \parencite{} (Shirvani (2012))[add citation]. 
 
 There are significant, ongoing changes to the role and deployment of gas-fired generators that are potentially leading to changes in unit reliability. 
-Natural-gas fired generators are more frequently ramping, as a result of more renewables, which is having unknown consequences but presumed negative affects on maintenance and reliability [add citation].
+Natural-gas fired generators are more frequently ramping, as a result of more renewables, which is having unknown but presumed negative affects on maintenance and reliability [add citation].
 At the very least, generators are experiencing increasing O\&M costs as a result of increasing power plant cycling given larger deployments of variable generation, especially for plants designed as baseload units \parencite{nrel:2012aa}.\footnote{Cycling means operating the plant in response to system load requirements (i.e., load following, varying load levels, etc.); as opposed to operating it as a baseload resource \parencite{nerc:2012aa}. Each cycling exposes equipment to pressure and thermal stresses that can damage equipment and subsequently, lead to shorter component life expectancies, higher equivalent forced outage rates (EFOR), and shorter life expectancies \parencite{nerc:2012aa}.} 
 These affects are being overlooked by current GEP problem formulations.
 
@@ -72,8 +60,6 @@ In this paper the centralized GEP problem is formulated as a two-stage stochasti
 We incorporate the system reliability measure through the \ldots
 The proposed model is evaluated using the IEEE 14 and 30 bus test system \parencite{christie:2009aa}.\footnote{We downloaded the power system data for each of the 14, 30, 57, 188, and 300 bus test systems.}  
 [Talk with Jeremy about the appropriate test system].
-
-In the first stage the model makes investment decisions while in the second stage the model checks to see that the system meets reliability constraints while in operation. 
 We consider the forced outage rate of each plant as a random variable, which necessarily impacts system reliability. 
 The reliability metric (i.e., LOLE, LOLP, EENS, etc.) are highly sensitive to the EFOR parameter (i.e., a small change in the parameter estimate can lead to large changes in the reliability metric. 
 GEP models have not explored the solution space that surrounds the EFOR parameter estimate. 
@@ -117,6 +103,59 @@ The model would then calculate the appropriate reliability statistic using the E
 
 \section{Model description and mathematical formulation}
 Planning and investment in power generation capacity expansion is difficult given the competing objectives for power producers (i.e. minimization of investment costs and maximization of reliability); uncertainty in a number of parameters (i.e.\ costs, demand, regulation), physical and technical constraints, complex mix of regulated and deregulated market structure across the country, and, large and lumpy investments, to name a few. 
+
+We formulate the generation expansion planning problem (GEP) as a two stage, stochastic mixed integer program (SMIP). 
+In the first stage the model makes investment decisions while in the second stage the model checks to see that the system meets reliability constraints while in operation.
+
+\section{Nomenclature}
+\begin{flushleft}
+\textit{Indices and sets}\\
+\textit{i} = 1, \ldots, \textit{j} index of the available technologies \\ 
+\textit{k} = 1, \ldots, \textit{m} index of the operating modes in the load duration curve [is this the steps?] \\
+\textit{n} = 1, \ldots, \textit{N} index of the set of buses \\
+\textit{t} = 1, \ldots, \textit{H} index of the periods in the model \\
+\end{flushleft}
+
+\begin{flushleft}
+\textit{Parameters} \\
+$a_i$ = \\
+$r$ = discount rate \\
+$g_i^t$ = existing capacity of technology \textit{i} at time \textit{t} \\
+$ic_{nt}$ = investment cost of technology \textit{i} at time \textit{t} \\
+$j_{nt}$ is the average capacity (MW) of \textit{nt} \\
+$L_i$ = lifetime of technology alternative \textit{i} \\
+$oc_{ik}^{t}$ = marginal cost of production for technology \textit{i} during load block \textit{k} at time \textit{t} \\
+$\rho_{i}^{t}$ = duration of load block \textit{k} at time \textit{t} \\
+\end{flushleft}
+
+\begin{flushleft}
+\textit{Variables}[will separate into continuous and binary later] \\
+$q_{ik}^{t}$ = active power generation of new generating units by technology \textit{i} for load block \textit{k} at time \textit{t} \\
+$q_{ik}^{t}$ = active power generation of new generating units by technology \textit{i} for load block \textit{k} at time \textit{t} \\
+$w_{i}^{t}$ = total capacity of technology \textit{i} at time \textit{t} \\
+$x_{nt, n}$ = integer variable that represents the number of nt at node \textit{n} \\
+\end{flushleft}
+
+\begin{equation}
+min_{x,y,w} \sum_{t=1}^{H}\bigg[\bigg(\sum_{i=1}^{j} ic_{nt, n}^{t}\cdot \big(x_{i}^{t} - x_{i}^{t-1}\big) + \sum_{i=1}^{j} \sum_{k=1}^{m} oc_{i}^{kt}\cdot \rho_{kt}^{t}\cdot q_{ik}^{t} \bigg)\bigg((1+ r)^{t-1}\bigg)^{-1}\bigg]
+\end{equation}
+
+The deterministic version of the model: 
+\begin{equation}\label{Lopez.2007}
+min_{x,y,w} \sum_{n} \sum_{nt} ic_{nt}\cdot j_{nt}\cdot x_{nt, n}  + \sum_{k} \bigg(\sum_{h}\sum_{et}oc_{et}\cdot q_{k,et,h} + \sum_{n}\sum_{nt} oc_{nt}\cdot q_{k,nt,n}\bigg) 
+\end{equation}
+
+The budget constraint
+\begin{equation}
+\sum_{n}\sum_{nt} ic_{nt}\cdot j_{nt}\cdot x_{nt, n} \leq B
+\end{equation}
+
+Nodal balance constraints:
+
+Power flow constraints:
+
+In Equation \ref{Lopez.2007} I need to weight the operating costs by the capacity factor for each technology.
+
 \subsection{Load model description}
 The system load for each period is represented using a step-wise load duration curve. 
 Demand varies across the year using a load duration curve representation that decomposes annual demand into several load segments. 
