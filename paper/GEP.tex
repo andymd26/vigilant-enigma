@@ -43,7 +43,6 @@ The Generation Expansion Planning (GEP) problem has been employed extensively to
 The GEP model determines how best to meet expected future demand through the selection of plant size, production technology, and location, as well as timing over a planning horizon, usually between 10 - 30 years \parencite{hemmati:2013ab}. 
 The GEP problem is well studied, from a variety of perspectives including: solution algorithms, incorporation of new production technologies, uncertainty characterization, reliability, time horizon, etc. \parencite{hemmati:2013ab}.
 
-<<<<<<< HEAD
 Two approaches are generally used to determine the solution to the GEP: either a centralized or decentralized approach \parencite{bakirtzis:2012aa}.\footnote{The micro-approach incorporates a high amount of model complexity that require operations research or meta-heuristic methods to solve but with the caveate that there is no guarantee that global optimality is achieved. Macro-modeling approaches reduce complexity by ignoring those features and constraints.} 
 The centralized approach is appropriate in monopoly situations (i.e., a monopoly utility determining least cost expansion plans) or in deregulated markets by governing or regulating authorities to better design markets and policies \parencite{bakirtzis:2012aa}.
 Solution methods for the centralized problem include stochastic dynamic programming (SDP)\parencite{}, non-linear programming (NLP)\parencite{}, evolutionary programming \parencite{}, multi-objective programming \parencite{}, mixed-integer linear programming (MILP) \parencite{}, in addition to other approaches \parencite{}\parencite{bakirtzis:2012aa}.  
@@ -53,72 +52,6 @@ For a more detailed discussion of the decentralized approach the reader is direc
 Uncertainty incorporation in the generation expansion planning problem has included price volatility, reliability of generation units, load forecast, electricity prices, and costs (i.e., fixed and variable) of each power production technology \cite{hemmati:2013ab, pereira2010decision, pereira2011generation}. 
 However, to date, the literature is bereft of an analysis of the effect of uncertainty or trends in the forced outage rate (FOR) parameter on the optimal investment portfolio in the GEP problem. 
 Past studies have demonstrated that small changes in the FOR can have significant effects on the reliability of the system \parencite{} (Shirvani (2012))[add citation]. 
-=======
-A number of reviews have been completed that systematically organize the GEP literature.
-\parencite{bakirtzis:2012aa, hemmati:2013ab}(Kagiannas et al., 2004; Zhu and Chow, 1997; Hobbs, 1995)\footnote{ Zhu, J., and Chow, M., A Review of Emerging Techniques on Generation Expansion
-Planning, IEEE Transactions on Power Systems, Vol.12, No.4, 1997; Hobbs, B.F., Optimization Methods for Electric Utility Resource Planning, European
-Journal of Operational Research, 83, 1-20, 1995; 
-Kagiannas, A. G., Askounis, D.Th., and Psarras, J., Power Generation Planning: A Survey
-from Monopoly to Competition, International Journal of Electrical Power and Energy
-Systems, 26, 413-421, 2004}
-
-Two approaches are generally used to determine the solution to the GEP using micro-approach modeling: a centralized or decentralized approach \parencite{bakirtzis:2012aa}.\footnote{The micro-approach incorporates a high amount of model complexity that require operations research or meta-heuristic methods to solve but with the caveate that there is no guarantee that global optimality is achieved. Macro-modeling approaches reduce complexity by ignoring those features and constraints.} 
-The centralized approach is appropriate in monopoly situations (i.e., a monopoly utility determining least cost expansion plans) or in deregulated markets by governing or regulating authorities to better design markets and policies \parencite{bakirtzis:2012aa}.
-Solution methods for the centralized problem include stochastic dynamic programming (SDP)\parencite{}, non-linear programming (NLP)\parencite{}, evolutionary programming \parencite{}, multi-objective programming \parencite{}, mixed-integer linear programming (MILP) \parencite{}, in addition to other approaches \parencite{}\parencite{bakirtzis:2012aa}.  
-[Insert the citations from \cite{bakirtzis:2012aa}.]
-The decentralized approach accounts for the behavior of market participants, usually in a deregulated market framework \parencite{bakirtzis:2012aa}. 
-For a more detailed discussion of the decentralized approach the reader is directed to \cite{bakirtzis:2012aa}. 
-
-\cite{bakirtzis:2012aa} incorporates system level reliability using the value of lost load (VLL) in the problem objective function (i.e., mixed-integer linear program) while addressing stochasticity through scenario exploration. 
-A simple model is used whereby the equivalent forced outage rate (EFOR) is used to derate the maximum output of each unit \parencite{bakirtzis:2012aa}. 
-\cite{tekiner:2010aa} developed a two-stage mixed-integer linear program that addresses stochasticity in the forced outage rates through the development of scenarios using Monte Carlo methods. 
-
-Each of the above papers fails to include the uncertainty and potential non-stationarity in the unit forced outage rates (FOR) in the calculation of system level reliability, which \cite{} [hopefully my own paper] has shown can be significant. 
-The failure to include uncertainty analysis around the forced outage rate parameter means that the results of our analysis aren't internalizing the true risk of failure and as a result, existing methods are actually operating at higher risk levels. 
- 
-In this paper the centralized GEP problem is formulated as a \ldots
-[stochastic mixed-integer linear program, genetic algorithm, \ldots]. 
-We incorporate the system reliability measure through the 
-The proposed model is evaluated using the IEEE 14 and 30 bus test system \parencite{christie:2009aa}.\footnote{We downloaded the power system data for each of the 14, 30, 57, 188, and 300 bus test systems.}  
-[Talk with Jeremy about the appropriate test system].
-Of particular interest is how uncertainty is incorporated into the GEP model formulation, as well as the uncertainties that have thus far been considered. 
-Uncertainty incorporation in the generation expansion planning problem has included price volatility, reliability of generation units, load forecast, electricity prices, and costs (i.e., fixed and variable) of each power production technology \cite{hemmati:2013ab, pereira2010decision, pereira2011generation}. 
-A common approach to dealing with uncertainties in the GEP framework is Monte Carlo methods \parencite{pereira2010decision}.
-Thus far 
-
-\section{Data}
-A common approach in the literature when developing a new model is to use a well studied data set. 
-In the GEP literature this is the IEEE Reliability Test system, which has a number of sizes (i.e., the number of buses in the system) \parencite{billinton:1994aa}. 
-We use the IEEE Reliability Test System \ldots [insert system size] \parencite{}. 
-
-\section{Model description and mathematical formulation}
-\subsection{Load model description}
-The system load for each period is represented using a step-wise load duration curve. 
-Demand varies across the year using a load duration curve representation that decomposes annual demand into several load segments. 
-The number of steps was chosen to accurately represent the load duration curve across the hours.
-\subsection{Energy balance constraints}
-\subsection{Unit operating cost constraints}
-\subsection{Annual budget constraints}
-\subsection{Binary constraints}
-
-\section{Results}
-The proposed model is evaluated using the \ldots bus IEEE Reliability test network \parencite{}.
-The system has \ldots nodes with total installed demand and capacities as defined in Table \ref{}. 
-We display other assumptions, such as the fuel cost and variable operations and maintenance costs in Table \ref{}.
-The average load of the system is \ldots with a peak load of \ldots.
-
-The load duration curve \ldots
-We have \ldots scenarios for the load growth: \ldots 
-
-[Insert model parameterization discussion here]
-
-
-\subsection{Computational, convergence, and feasibility issues}
-[Insert description of the computer used to solve]
-[Insert description of the number of variables and equations]
-\cite{bakirtzis} used a convergence tolerance of 0.25\% with their model taking between 7 and 18 minutes to solve. 
-\section{Discussion}
->>>>>>> 2bdb367f676815f77e477e0eeaa57361f0455b63
 
 There are significant, ongoing changes to the role and deployment of gas-fired generators that are potentially leading to changes in unit reliability. 
 Natural-gas fired generators are more frequently ramping, as a result of more renewables, which is having unknown consequences but presumed negative affects on maintenance and reliability [add citation].
@@ -136,6 +69,10 @@ The adequacy of the deployed resources to meet demand can be incorporated into t
 LOLP can be calculated using daily peak load (i.e. hour demand for a 24 hour period) or using daily peak loads for a 1-year period using a load duration curve \parencite{endrenyi:1978}.}, Loss of Load Cost (LOLC), and Expected energy not served (EENS)\footnote{EENS is the expectation of the energy that the system is not capable of serving and is calculated as the following $EENS = P_k \left(C_T - L_k \right)\times \left(C_T- L_k \right)$.}.\footnote{Given its simplicity LOLE has been extensively used in the past, however, EENS does have certain advantages including that it encompasses the degree of the deficiency, as well as the likelihood \parencite[p622]{murugan2009nsga}.}
 
 In this paper the centralized GEP problem is formulated as a two-stage stochastic mixed integer program.
+We incorporate the system reliability measure through the \ldots
+The proposed model is evaluated using the IEEE 14 and 30 bus test system \parencite{christie:2009aa}.\footnote{We downloaded the power system data for each of the 14, 30, 57, 188, and 300 bus test systems.}  
+[Talk with Jeremy about the appropriate test system].
+
 In the first stage the model makes investment decisions while in the second stage the model checks to see that the system meets reliability constraints while in operation. 
 We consider the forced outage rate of each plant as a random variable, which necessarily impacts system reliability. 
 The reliability metric (i.e., LOLE, LOLP, EENS, etc.) are highly sensitive to the EFOR parameter (i.e., a small change in the parameter estimate can lead to large changes in the reliability metric. 
@@ -148,11 +85,23 @@ In the fifth section, we introduce our case studies before we discuss the result
 In the final section, we discuss some relevant conclusions of our work. 
 
 \section{Data}
-The proposed model is evaluated using the IEEE 14 and 30 bus test system \parencite{christie:2009aa}.\footnote{We downloaded the power system data for each of the 14, 30, 57, 188, and 300 bus test systems.}  
-[Talk with Jeremy about the appropriate test system].
-
+A common approach in the literature when developing a new model is to use a well studied data set. 
+In the GEP literature this is the IEEE Reliability Test system, which has a number of sizes (i.e., the number of buses in the system) \parencite{billinton:1994aa}. 
+We use the IEEE Reliability Test System \ldots [insert system size] \parencite{}. 
 
 \section{Methods}
+A number of reviews have been completed that systematically organize the GEP literature.
+\parencite{bakirtzis:2012aa, hemmati:2013ab}(Kagiannas et al., 2004; Zhu and Chow, 1997; Hobbs, 1995)\footnote{ Zhu, J., and Chow, M., A Review of Emerging Techniques on Generation Expansion
+Planning, IEEE Transactions on Power Systems, Vol.12, No.4, 1997; Hobbs, B.F., Optimization Methods for Electric Utility Resource Planning, European
+Journal of Operational Research, 83, 1-20, 1995; 
+Kagiannas, A. G., Askounis, D.Th., and Psarras, J., Power Generation Planning: A Survey
+from Monopoly to Competition, International Journal of Electrical Power and Energy
+Systems, 26, 413-421, 2004}
+
+\cite{bakirtzis:2012aa} incorporates system level reliability using the value of lost load (VLL) in the problem objective function (i.e., mixed-integer linear program) while addressing stochasticity through scenario exploration. 
+A simple model is used whereby the equivalent forced outage rate (EFOR) is used to derate the maximum output of each unit \parencite{bakirtzis:2012aa}. 
+\cite{tekiner:2010aa} developed a two-stage mixed-integer linear program that addresses stochasticity in the forced outage rates through the development of scenarios using Monte Carlo methods. 
+
 The GEP problem is a large-scale, highly-constrained mixed-integer linear program (MINLP) that requires complete enumeration (i.e., investigation of every combination of assets over the time horizon) to identify the global optimum \parencite{bakirtzis:2012aa}.  
 The inability to undertake such an exercise has led to the development of simplifications to reduce the computational load of the problem. 
 
@@ -166,50 +115,35 @@ As a result, several methods were developed to assess system adequacy.
 The approach accounts for unit forced outage rates (FOR), system adequacy targets\footnote{In the GEP formulation framework the modeler would select an acceptable level of service (i.e., industry standard is an insufficient capacity with a frequency of 1-in-10 years)\parencite{}. 
 The model would then calculate the appropriate reliability statistic using the EFOR (i.e., the number of hours of unit failure as a percentage of all available hours) for each generation unit type and size.}, uncertainty in expected load growth, as well as the size, type and number of units in the production mix \parencite{aghaei:2013aa, \ldots}. 
 
-\section{SMIP GEP problem formulation}
-\subsection{Objective function \nopunct}
-
-\subsection{Constraints \nopunct}
+\section{Model description and mathematical formulation}
+Planning and investment in power generation capacity expansion is difficult given the competing objectives for power producers (i.e. minimization of investment costs and maximization of reliability); uncertainty in a number of parameters (i.e.\ costs, demand, regulation), physical and technical constraints, complex mix of regulated and deregulated market structure across the country, and, large and lumpy investments, to name a few. 
+\subsection{Load model description}
+The system load for each period is represented using a step-wise load duration curve. 
+Demand varies across the year using a load duration curve representation that decomposes annual demand into several load segments. 
+The number of steps was chosen to accurately represent the load duration curve across the hours.
+\subsection{Energy balance constraints}
+\subsection{Unit operating cost constraints}
+\subsection{Annual budget constraints}
+\subsection{Binary constraints}
 \subsubsection{Maximum construction limit \nopunct}
 This constraint is a maximum allowable number, capacity, or investment amount for new generation sources to be built during period \textit{t} given limited resources (i.e., capital, manpower, space, etc.). 
 \subsubsection{LOLP constraint \nopunct}
+To ensure that adequacy requirements (i.e., minimum level of service) are maintained the GEP problem formulation typically includes reliability constraints.\footnote{Reliability and adequacy are considered early in the planning process, typically well before stability and fault analysis. These factors are a necessary component of any long-term planning process; otherwise, there is no guarantee of having adequate supply to meet system demand.}\footnote{The determination of the adequate generation supply capacity can be divided into two areas: static and operating capacity requirements \parencite{billinton1984reliability}.
+In this study, we focus on the static capacity requirement, which is the capacity that must be planned and installed in advance of system demand (i.e., as a part of a long-term planning process) \parencite{billinton1984reliability}.
+Static capacity must be able to provide for outages and regularly scheduled maintenance, in addition to anticipated load growth \parencite{billinton1984reliability}.
+Operating capacity, which we mention only for completeness, determines the capacity necessary to meet actual short-term load and is used in different frameworks, such as unit commitment problems \parencite{billinton1984reliability}.}
 \begin{equation}
 \textit{lolpc}_{t} \leq \textit{lolps}_{t} \forall t \in T 
 \end{equation}
 
 The $\textit{lolpc}_{t}$ is the loss-of-load probability at stage \textit{t} and $\textit{lolps}_{t}$ is the loss-of-load probability limit (i.e., the reliability target selected by the user) \parencite{dragoon:2006aa}. 
 The equivalent Z constraint is \ldots
+\subsection{Computational, convergence, and feasibility issues}
+[Insert description of the computer used to solve]
+[Insert description of the number of variables and equations]
+\cite{bakirtzis} used a convergence tolerance of 0.25\% with their model taking between 7 and 18 minutes to solve. 
 
-
-\subsubsection{Non-negativity constraints \nopunct}
-
-\section{\ldots [Name of solution algorithm}
-
-
-As a result, 
-Planning and investment in power generation capacity expansion is difficult given the competing objectives for power producers (i.e. minimization of investment costs and maximization of reliability); uncertainty in a number of parameters (i.e.\ costs, demand, regulation), physical and technical constraints, complex mix of regulated and deregulated market structure across the country, and, large and lumpy investments, to name a few. 
-One tool used in the long-term power planning process is Generation Expansion Planning (GEP) problem, which provides a framework to optimize generation investment.
-	
-<<<<<<< HEAD
 \section{SMIP GEP: Case study}
-=======
-
-To ensure that adequacy requirements (i.e., minimum level of service) are maintained the GEP problem formulation typically includes reliability constraints.\footnote{Reliability and adequacy are considered early in the planning process, typically well before stability and fault analysis. These factors are a necessary component of any long-term planning process; otherwise, there is no guarantee of having adequate supply to meet system demand.}\footnote{The determination of the adequate generation supply capacity can be divided into two areas: static and operating capacity requirements \parencite{billinton1984reliability}.
-In this study, we focus on the static capacity requirement, which is the capacity that must be planned and installed in advance of system demand (i.e., as a part of a long-term planning process) \parencite{billinton1984reliability}.
-Static capacity must be able to provide for outages and regularly scheduled maintenance, in addition to anticipated load growth \parencite{billinton1984reliability}.
-Operating capacity, which we mention only for completeness, determines the capacity necessary to meet actual short-term load and is used in different frameworks, such as unit commitment problems \parencite{billinton1984reliability}.}
-	 
-
-
-
-\section{Methodology}
-The generation expansion planning (GEP) model we present here is based upon a toy model presented in (Ehrenmann and Smeers 2011). We build upon the toy model through the inclusion of (i) multiple nodes, (ii) a complete transmission network, and (iii) stochastic demand, fuel inputs, and reliability. 
-The individual generator is a price taking firm that maximizes profit by choosing an optimal capacity investment $(y_{hi})$ and generation $(x_{hli})$ given marginal costs of production $(C_h)$, electricity prices $(pi_{li})$, and investment costs $(I_{h})$.
-
-In the next few sections we walk the reader through model development activities to date. 
-Model development has proceeded incrementally to ensure the accuracy of results. 
-
->>>>>>> 2bdb367f676815f77e477e0eeaa57361f0455b63
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
                     thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}]
 	\node[main node](1){1};
@@ -228,81 +162,28 @@ Model development has proceeded incrementally to ensure the accuracy of results.
 	 edge [bend left] node[below]{$P_{32}$}(2);
 \end{tikzpicture}
 
-	
-	
-	
-	
-	
-	
-	
-		
-\subsection{Data}	
+\section{Results}
+The proposed model is evaluated using the \ldots bus IEEE Reliability test network \parencite{}.
+The system has \ldots nodes with total installed demand and capacities as defined in Table \ref{}. 
+We display other assumptions, such as the fuel cost and variable operations and maintenance costs in Table \ref{}.
+The average load of the system is \ldots with a peak load of \ldots.
+
+The load duration curve \ldots
+We have \ldots scenarios for the load growth: \ldots 
+
+[Insert model parameterization discussion here]
+
+\section{Discussion}
 
 
-	The changing electricity generation mix requires that industry personnel gain more experience with ``generating resource technology behavior, operating characteristics, and optimal planning approaches in order to properly assess reliability or improve performance analysis'' \parencite{nerc2011gads}. 
-	Understanding the reliability and performance of existing and new production technologies is necessary to understand the reliability of the bulk power system in North America \parencite{nerc2011gads}. 
-	It is also important to electric utilities since poor performing units can result in higher operating costs (i.e., loading units out of economic order), a need to purchase power, and/or installing additional capacity \parencite{}(GADS Introduction material).
-	The industry, as a result, created the Generating Availability Database (GADs) as a means to share information on the causes and effects of unavailability, in addition to the development and improvement of strategies to prevent or mitigate availability losses that have proven useful to others \parencite{}(GADS intro material). 
-	
-	The North American Electric Reliability Corporation (NERC) compiles the Generating Availability Data System (GADS), which is an annual summary report for power stations located in the United States and Canada \parencite{nercgads}. 
-	GADS contains information about the type of equipment used, performance characteristics, and descriptions of events (i.e. equipment failures). 
-	Four types of events are reported in GADS: outages, deratings, reserve shutdowns, and non-curtailing events \parencite{gugel2015polar}. 
-	It also contains data on the reliability, availability and maintainability of power plants (i.e., outage data). 
-	The dataset includes the equivalent forced outage (EFOR), which is defined as the hours of unit failure (i.e. unplanned outage hours and equivalent unplanned derated hours) as a percentage of total available hours (i.e. unplanned outage, unplanned derated, and service hours)(wikipedia, GADS).\footnote{EFOR is calculated using IEEE Standard 762 definitions \parencite{gugel2015polar}.} 
-	Outages can be divided into planned -- scheduled maintenance, versus unplanned outages -- unscheduled outages. 
-	
-	GADS began in 1979 as an extension of a data collection process that begin during the 1960s \parencite{}(GADS, The generating availability data system (GADS): Application and benefits, 1995).
-	The database began as a voluntary with each participating utility providing detailed reports of each units operation and performance.
-	However, since January 1, 2013, it is mandatory for conventional generating units with a nameplate capacity $\geq$ 20 MW to report reliability information to GADS \parencite{}(GADS frequently asked questions).  
-	Variable energy sources are not required to report reliability information; a taskforce is currently underway to assess the best data collection methods for solar \parencite{}(GADS frequently asked questions). 
-	The reports include quarterly information on the design information, types of outages and deratings, energy produced, fuel use, etc., which are then summarized in the annual \textit{Generating Availability Report} \parencite{} (GADS, The generating availability data system (GADS): Application and benefits, 1995).   
-	It has involved to include data collection, data maintenance and support, in addition to data processing and reporting (i.e., trends in industry availability).
-	
-	The GADS contains operating histories for more than 7,700 generating units located in North America ($\approx$ 90\% of all installed generating capacity)\parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015). 
-	Events are defined as any time the operating status of a generator changes and include: outages, derates, reserve shutdowns, and non-curtailing events \parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015).
-	The event report will include informaiton on the event magnitude, primary cause, and, additional causes or components worked during the event \parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015, pIII-2).
-	In Figure \ref{fig:unit.states.GADS} we show the Unit States diagram from the \parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015, pIII-5).
-	
 
-	Resources can first be categorized by whether they are active or inactive.
-	Inactive resources are in one of three potential states: inactive reserve (IR), mothballed (MB), and, retired (RU). 
-	An inactive reserve, mothballed, or retired unit is a unit whereby the unit is unavailable for an extended period of time for reasons unrelated to the equipment \parencite{}(Generating Availability Data System: Data Reporting Instructions, 2015, pIII-5). 
-	Active states include: available and unavailable, which can be further broken down into unplanned outages and planned deratings for available resources, as well as unplanned outages and planned outages for unavailable resources \parencite{} (Generating Availability Data System: Data Reporting Instructions, 2015, pIII-6). 
-	``An outage exists whenever a unit is not synchronized to the grid system and not in a reserve shutdown state. 
-	An outage starts when the unit is either desynchronized from the grid or when it moves from one unit state to another (for example, goes from a reserve shutdown to a maintenance outage). 
-	The outage ends when the unit is synchronized to the grid or moves to another unit state'' (Generating Availability Data System: Data Reporting Instructions, 2015, pIII-6). 
-	
-	In the GADS database an interruption in fuel supply, for example, as a result of interruptible supply of fuel as part of a fuel contract would be considered as events caused by external economic factors with a cause code 9131 \parencite{} (Generating Availability Data System: Data Reporting Instructions, 2015, Appendix B - pB-FS-29). . 
-	
-	The underlying data, used to calculate the annual summaries, is not publically available.
-	Data sharing in GADS works via the following mechanism: an electric utility would share information for the types of power plants in its portfolio of assets.
-	In GADS it would then have access to more detailed (and not publically available) reliability information concerning only those types of power plants.   
-	The Generating Availability Report contains 17 categories of statistics for generating units and related equipment, which can be viewed at an annual or five-year cumulative basis. 
-	The generating units are grouped by type, size (i.e., nameplate rating), and fuel (i.e., primary fuel used). 
+
 	 
-\subsection{Methods}
-	We propose to use the GADS dataset to build a Bayesian regression model to estimate a posterior distribution around the EFOR parameter for each type (and size grouping) of power plant. 
-	Reliability is known to be a function of or at least correlated with the size and type of power plant. 
-	In our regression model we will control for confounding factors (i.e., weather, location, etc.) and trends (i.e., capacity factor, etc.) in the dataset.  
-	
-	Each generation unit can be represented by its capacity and its unavailability and each unit has only two states: on or an outage. 
-	One disadvantage of the model is that it is a two-state system (i.e. up or down) while generating units are necessarily more complex in that they may experience partial failures in which they operate at reduced capacity levels (i.e. a 3- or even multi-state model).
-	The capacity is a random variable in reliability analysis (Phoon, 2006, p19).
-	\[
- 	   P(X=x_i)=\left\{
-             		   \begin{array}{c l}
-             			   1-q & x_i = capacity_i \\
-             			   q & x_i = 0
-            		    \end{array}
-         			\right.
-	\]
-	where, $q$ is the equivalent forced outage rate (EFOR)
-	The capacity out of service then is multinomially distributed. 
-	There are $2^n$ possible states, where $n$ is the number of generating units.
-	And the likelihood of capacity greater than a particular value is $P(X \geq x_k) = \sum_{i \geq k} p(x_i)$.
-	In other words, we sum all of the outcomes in which capacty exceeds a particular value and repeat this from the smallest unit capacity to the total system capacity value.  
-	The likelihood of different capacity outages of the system, which is the basis of the COCPT. 			
-	
+
+
+
+
+
 
 \printbibliography
 \end{document}
