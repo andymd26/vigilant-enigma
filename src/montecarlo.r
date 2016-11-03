@@ -2,15 +2,20 @@ require(dplyr)
 
 threshold = 65000
 x = c(100, 150, 200, 25, 30)
+x= c(1000)
 # [Integer variable] the number of each unit type picked by the 1st stage of the model
 avg.size = c(50, 50, 100, 500, 1000)
+avg.size = 1
 # the average size of each unit type in the model
 avg.for = c(0.6, 0.85, 0.85, 0.9, 0.95)
+avg.for = 0.9
 # the average forced outage rate of each unit type in the model
 for.rep = c(rep(avg.for[1], x[1]), rep(avg.for[2], x[2]), rep(avg.for[3], x[3]), rep(avg.for[4], x[4]), rep(avg.for[5], x[5]))
+for.rep = c(rep(avg.for[1], x[1]))
 size.rep = matrix(c(rep(avg.size[1], x[1]), rep(avg.size[2], x[2]), rep(avg.size[3], x[3]), rep(avg.size[4], x[4]), rep(avg.size[5], x[5])), nrow = 1)
+size.rep = matrix(c(rep(avg.size[1], x[1])), nrow = 1)
 
-y = t(sapply(for.rep, function(x) rbinom(n=100000, size=1, prob =x)))
+y = t(sapply(for.rep, function(x) rbinom(n=1000000, size=1, prob =x)))
 x = data.frame(mw = c(size.rep %*% y)) %>%
   group_by(mw) %>%
   summarize(freq=n()) %>%
