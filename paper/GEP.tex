@@ -101,6 +101,21 @@ As a result, several methods were developed to assess system adequacy.
 The approach accounts for unit forced outage rates (FOR), system adequacy targets\footnote{In the GEP formulation framework the modeler would select an acceptable level of service (i.e., industry standard is an insufficient capacity with a frequency of 1-in-10 years)\parencite{}. 
 The model would then calculate the appropriate reliability statistic using the EFOR (i.e., the number of hours of unit failure as a percentage of all available hours) for each generation unit type and size.}, uncertainty in expected load growth, as well as the size, type and number of units in the production mix \parencite{aghaei:2013aa, \ldots}. 
 
+\subsection{Monte Carlo methods}
+Given $n$ binomially distributed random variables there exist $2^n$ possible combinations.
+Even in the case of a relatively small $n$ (i.e., $n$ ~ 25) there are approximately 33 million possible combinations.
+One possible approach is to parallelize the process. 
+Another approach is to approximate the behavior of the system through simulation (i.e., Monte Carlo analysis).
+We explore both options.
+
+In a simplified example, whereby each of the installed power plants (i.e., 10 in total) is the same size (i.e., 1 MW) and have the same forced outage rate (i.e., 0.90) the probability of having all power plants out of service (i.e., an available capacity of x MW) is:
+\begin{equation}
+\begin{split}
+P(x=0) &= \binom{10}{0}(0.9)^0(0.1)^{10} \\
+P(x=100) &= \binom{10}{1}(0.9)^{1}(0.1)^{9}
+\end{split}
+\end{equation}
+
 \section{Model description and mathematical formulation}
 Planning and investment in power generation capacity expansion is difficult given the competing objectives for power producers (i.e. minimization of investment costs and maximization of reliability); uncertainty in a number of parameters (i.e.\ costs, demand, regulation), physical and technical constraints, complex mix of regulated and deregulated market structure across the country, and, large and lumpy investments, to name a few. 
 
