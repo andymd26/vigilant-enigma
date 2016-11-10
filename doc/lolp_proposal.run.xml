@@ -41,13 +41,13 @@
   >
 ]>
 <requests version="1.0">
-  <internal package="biblatex" priority="9" active="0">
+  <internal package="biblatex" priority="9" active="1">
     <generic>latex</generic>
     <provides type="dynamic">
-      <file>lolp.proposal.bcf</file>
+      <file>lolp_proposal.bcf</file>
     </provides>
     <requires type="dynamic">
-      <file>lolp.proposal.bbl</file>
+      <file>lolp_proposal.bbl</file>
     </requires>
     <requires type="static">
       <file>blx-dm.def</file>
@@ -60,23 +60,23 @@
       <file>english.lbx</file>
     </requires>
   </internal>
-  <external package="biblatex" priority="5" active="0">
+  <external package="biblatex" priority="5" active="1">
     <generic>biber</generic>
     <cmdline>
       <binary>biber</binary>
-      <infile>lolp.proposal</infile>
+      <infile>lolp_proposal</infile>
     </cmdline>
     <input>
-      <file>lolp.proposal.bcf</file>
+      <file>lolp_proposal.bcf</file>
     </input>
     <output>
-      <file>lolp.proposal.bbl</file>
+      <file>lolp_proposal.bbl</file>
     </output>
     <provides type="dynamic">
-      <file>lolp.proposal.bbl</file>
+      <file>lolp_proposal.bbl</file>
     </provides>
     <requires type="dynamic">
-      <file>lolp.proposal.bcf</file>
+      <file>lolp_proposal.bcf</file>
     </requires>
     <requires type="editable">
       <file>C:/Users/bloh356/Google Drive/Library/Library.bib</file>

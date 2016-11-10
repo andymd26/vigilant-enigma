@@ -57,5 +57,22 @@ The objective function (one of the several objective functions) then maximizes t
 max f_3 = \sum_{t \in T} Z_t
 \end{equation}
 
+The uses a stochastic generation expansion planning model to model the interdependent operations of the natural gas and electric power system \parencite{pantos:2013aa}.
+All possible system states are generated using Monte Carlo simulation methods, which are then used to create scenarios of all possible states in the time horizon \parencite{pantos:2013aa}. 
+The scenarios consider all possible states of both the natural gas pipeline infrastructure, as well as the forced outage rate of natural gas fired generators. 
+The model uses the Benders decomposition to solve, whereby the master problem is to optimize investments in new generation and energy transmission paths and the subproblem addresses the reliability check.
+The reliability check problem is further decomposed using Benders into  the master problem, which addresses the reliability of the electric power system and the subproblem, which is focused on the natural gas system reliability \parencite{pantos:2013aa}. 
+\cite{pantos:2013aa} use the loss of energy probability (LOEP) metric, which is defined as the ratio of the EEUE to the total electric energy demand. 
+The way that they have implemented the subproblem (i.e., electric power system reliability) they can use a benders cut to provide information back to the master problem if the reliability constraint is violated (i.e., investment problem). 
+\begin{equation}
+LOEP_{bt} = \frac{\sum_{s=1}^{NS} PR_{s}\cdot W^{r}_{bt, s}\cdot DT_{b}}{\sum_{s=1}^{NS} PR_{s}\cdot L_{bt, s}\cdot DT_{b}}
+\end{equation}
+If the reliability criterion is not satistifed then the Benders cut is:
+\begin{equation}
+\sum_{s=1}^{NS} PR_{s}\cdot W^{r}_{bt,s} + \sum_{s=1}^{NS}\sum_{i=1}^{CG}(PR_{s}\cdot\lambda^{r}_{ibt,s}\cdot PG^{C,max}_{i}\cdot UX^{C}_{ibt,s}\cdot (X_{it}-\hat{X}_{it}))\leq LOEP\cdot \sum_{s=1}^{NS}PR_{s}\cdot L_{bt,s}
+\end{equation}
+
+
+
 \printbibliography
 \end{document}
