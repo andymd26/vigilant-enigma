@@ -30,14 +30,6 @@ x = data.frame(mw = c(size.rep %*% y)) %>%
   # Identify the states with equivalent or greater capacity
   filter(cum.prob == max(cum.prob))
 
-<<<<<<< HEAD
-x.value = 84
-x.percentile = 0.0275
-f2 = function(lambda) ppois(x.value, lambda) - x.percentile
-uniroot(f2, c(0, 10000))[1]
-max(f2(floor(as.numeric(uniroot(f2, c(0, 10000))[1]))), f2(ceiling(as.numeric(uniroot(f2, c(0, 10000))[1]))))
-
-=======
 x.value = 10
 x.percentile = 0.1
 
@@ -45,5 +37,4 @@ f2 = function(lambda) ppois(x.value, lambda) - x.percentile
 uniroot(f2, c(0, 1000))
 max(f2(floor(as.numeric(uniroot(f2, c(0, 10000))[1]))), f2(ceiling(as.numeric(uniroot(f2, c(0, 10000))[1]))))
 
->>>>>>> 2d373b123959d5b1a27596e094b49d9b3d418fe8
 floor(as.matrix(uniroot(f2, c(0, 10000))[1]),ceiling(uniroot(f2, c(0, 10000))[1]))

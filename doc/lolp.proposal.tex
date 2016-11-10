@@ -2,8 +2,7 @@
 \usepackage{graphicx} 
 \usepackage{float} % necessary for placement of figures
 \usepackage{amsmath}
-\usepackage{tikz}
-\usepackage{pgfgantt} % load Gant chart package
+\usepackage{ upgreek }
 \usepackage{array}
 \usepackage[style = authoryear, sorting = nyt, backend = biber]{biblatex}
 \addbibresource[location = local, type = file]{C:/Users/bloh356/Google Drive/Library/Library.bib}
@@ -15,7 +14,48 @@ The units are MW on the y-axis and hours on the x-axis.
 From the curve we can estimate the amount of time that demand was above various thresholds. 
 Do they estimate a load duration curve and then 
 
-The loss of load expectation (LOLE) is defined as the number of poeiods in which demand exceeds the available capacity.
+The loss of load expectation (LOLE) is defined as the number of periods in which demand exceeds the available capacity.
 
-yo
+
+\section{Literature}
+Decentralized GEP approach, whereby each GENCO establishes its own multi-year generation expansion plan to maximize its profit (i.e., electricity price minus plant costs) through a mixed integer problem using genetic algorithm solution methods \parencite{pereira2011generation}. 
+The global level of the model performs checks on whether global constraints are met (i.e., prevent over investment in a technology, reliability, etc.). 
+If constraints are violated then a new set of individual plans is created whereby each GENCO use updated estimates of the fuel and electricity prices, as well as capacity factors that are modeled in a systems dynamic model. 
+Changes to these factors would result in changes to individual GENCO profits and subsequently, investment decisions. 
+If a proper price signal cannot be sent in the systems dynamic model then two alternatives are used: imposing minimum investment capacities or incorporate a capacity term in the objective function \parencite{pereira2011generation}. 
+Some models modify the objective function to include energy not served at the value of lost load.
+
+A centralized, multi-period, multi-objective generation expansion planning model that incorporates sustainable energy sources is developed \parencite{aghaei:2013aa}.  
+Reliability is evaluated using the Z-method.
+The Z-method calculates the surplus of available generation at each hour $i$ of time period $t$. 
+The surplus is a random variable with 'resource adequacy expressed as the ratio of the expected surplus to the standard deviation of the surplus in the time period $t$ \parencite{aghaei:2013aa}.
+
+\begin{equation}	
+\begin{split}
+S_{it} &= R_{it} - L_{it} \\
+\bar{S}_{t} &= \bar{R}_{t} - \bar{L}_{t} \\
+Z_{t} &= \frac{\bar{S}_{t}}{\sigma_{S_t}}
+\end{split}
+\end{equation} 
+
+\begin{equation}	
+\begin{split}
+\bar{S}_{0} &= \bar{R}_{0} - \bar{L}_{0} \\
+&= \sum_{n \in N_{exs}} [(1-q_n)\cdot X_{n0} \cdot p_{n0}] - \bar{L}_0 \\
+\bar{S'}_{t} &= \bar{R'}_{t} - \Updelta{L}_{t} \\
+&= \sum_{n \in N_{exs}} [(1-q_n)\cdot X_{nt} \cdot p_{nt}] - \Updelta{L}_t  \forall t \in T \\
+\Updelta{L}_{t} &= \bar{L}_{t} - \bar{L}_{0} \forall t \in T \\
+\bar{S}_{t} &= \bar{S}_{0} + \bar{S'}_{t} \forall t \in T \\
+\sigma^2_{S_0} &= \sum_{n \in N_{exs}} [q_n \cdot (1-q_n)\cdot X_{n0} \cdot p^2_{n0}] \\
+\sigma^2_{R'_t} &= \sum_{n \in N_{exs}} [q_n \cdot (1-q_n)\cdot X_{nt} \cdot p^2_{nt}] \\
+\sigma_{S_t} &= \sqrt{(\sigma^2_{S_0} + \sigma^2_{L}) + \sigma^2_{R'_t}}
+\end{split}
+\end{equation}
+
+The objective function (one of the several objective functions) then maximizes the following: 
+\begin{equation}
+max f_3 = \sum_{t \in T} Z_t
+\end{equation}
+
+\printbibliography
 \end{document}
