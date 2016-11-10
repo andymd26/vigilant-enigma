@@ -14,7 +14,7 @@ for.rep = c(rep(avg.for[1], x[1]), rep(avg.for[2], x[2]), rep(avg.for[3], x[3]),
 for.rep = c(rep(avg.for[1], x[1]))
 size.rep = matrix(c(rep(avg.size[1], x[1]), rep(avg.size[2], x[2]), rep(avg.size[3], x[3]), rep(avg.size[4], x[4]), rep(avg.size[5], x[5])), nrow = 1)
 size.rep = matrix(c(rep(avg.size[1], x[1])), nrow = 1)
-
+test
 
 y = t(sapply(for.rep, function(x) rbinom(n=50000, size=1, prob =x)))
 x = data.frame(mw = c(size.rep %*% y)) %>%
