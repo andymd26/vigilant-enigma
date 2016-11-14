@@ -74,7 +74,28 @@ If the reliability criterion is not satistifed then the Benders cut is:
 
 Cumulant method
 
+\cite{tohidi2013generation} include both generation expansion and retirement considerations through a stochastic mixed integer program.
+The authors use a scenario reduction approach that minimizes the number of scenarios needed while maximizing the estimated standard deviation of the loss of load expectation (LOLE). 
+The stopping criteria is formulated as:
+\begin{equation}
+\sigma = \frac{1}{NS}\sqrt{\sum_{s=1}^{NS}\frac{LOLE_{s}-\bar{LOLE})^2}{NS-1}}
+\end{equation}
+The model calculates the system minutes as derived from the Expected Energy Not Served (EENS). 
+\begin{equation}
+\begin{split}
+SM_{y} &= \frac{EENS_{y}}{\bar{L}_{y}}\cdot 60 \\
+EENS_{y} &= \sum_{l=1}^{ND} t_{l} \sum_{s=1}^{NS_y} \pi_{ys} \sum_{b=1}^{NB} LS_{ybls} \\
+SM_{y} &\leq \bar{SM}
+\end{split}
+\end{equation}
+Violations of the constraint are included in the objective function through a system risk cost (i.e., the value of lost load).
+\begin{equation}
+RC_{y} = (1+r)^{(0.5-y)}\sum_{b=1}^{NB}\sum_{l=1}^{ND}\sum_{s=1}^{NS_y} \pi_{ys} \cdot VOLL_{yb} \cdot LS_{ybls}
+\end{equation}
 
+\cite{jirutitijaroen2008reliability} use a stochastic mixed-integer program approach to the transmission and generation expansion planning problem.
+Reliability is incorporated through the expected cost of load loss, which is estimated using scenario reduction techniques.
+[Need to keep reading this one] 
 
 \printbibliography
 \end{document}
