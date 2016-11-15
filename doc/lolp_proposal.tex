@@ -73,6 +73,7 @@ If the reliability criterion is not satistifed then the Benders cut is:
 \end{equation}
 
 Cumulant method
+\cite{kothari2009optimal, stremel1980production, sirikum2006power}
 
 \cite{tohidi2013generation} include both generation expansion and retirement considerations through a stochastic mixed integer program.
 The authors use a scenario reduction approach that minimizes the number of scenarios needed while maximizing the estimated standard deviation of the loss of load expectation (LOLE). 
@@ -96,6 +97,10 @@ RC_{y} = (1+r)^{(0.5-y)}\sum_{b=1}^{NB}\sum_{l=1}^{ND}\sum_{s=1}^{NS_y} \pi_{ys}
 \cite{jirutitijaroen2008reliability} use a stochastic mixed-integer program approach to the transmission and generation expansion planning problem.
 Reliability is incorporated through the expected cost of load loss, which is estimated using scenario reduction techniques.
 [Need to keep reading this one] 
+
+\cite{jirutitijaroen2007stochastic} model the generation expansion planning problem as a two-stage stochastic recourse model with the objective of the second stage to minimize operation cost, as well as the cost of unserved energy.
+The authors value the lost load according to customer damage functions that were created from utility cost surveys conducted in the United States \parencite{lawton2003framework}. 
+The model is solved using the L-shaped algorithm.
 
 \printbibliography
 \end{document}

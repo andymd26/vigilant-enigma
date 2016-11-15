@@ -2105,8 +2105,13 @@
     <bcf:citekey order="6">pantos:2013aa</bcf:citekey>
     <bcf:citekey order="7">pantos:2013aa</bcf:citekey>
     <bcf:citekey order="8">pantos:2013aa</bcf:citekey>
-    <bcf:citekey order="9">tohidi2013generation</bcf:citekey>
-    <bcf:citekey order="10">jirutitijaroen2008reliability</bcf:citekey>
+    <bcf:citekey order="9">kothari2009optimal</bcf:citekey>
+    <bcf:citekey order="9">stremel1980production</bcf:citekey>
+    <bcf:citekey order="9">sirikum2006power</bcf:citekey>
+    <bcf:citekey order="10">tohidi2013generation</bcf:citekey>
+    <bcf:citekey order="11">jirutitijaroen2008reliability</bcf:citekey>
+    <bcf:citekey order="12">jirutitijaroen2007stochastic</bcf:citekey>
+    <bcf:citekey order="13">lawton2003framework</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" name="nyt/global/" type="entry" sortscheme="nyt" sortnamekeyscheme="global" labelprefix="">
   <bcf:sorting>
