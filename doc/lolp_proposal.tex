@@ -75,6 +75,18 @@ If the reliability criterion is not satistifed then the Benders cut is:
 \sum_{s=1}^{NS} PR_{s}\cdot W^{r}_{bt,s} + \sum_{s=1}^{NS}\sum_{i=1}^{CG}(PR_{s}\cdot\lambda^{r}_{ibt,s}\cdot PG^{C,max}_{i}\cdot UX^{C}_{ibt,s}\cdot (X_{it}-\hat{X}_{it}))\leq LOEP\cdot \sum_{s=1}^{NS}PR_{s}\cdot L_{bt,s}
 \end{equation}
 
+\begin{equation}
+\begin{split}
+PG_{i}^{C,max} &\quad \text{} \\
+PR_{s} &\quad \text{is the probability of scenario $s$} \\
+W^{r}_{bt,s} &\quad \text{is the objective function of the EPS reliability check}\\
+\lambda^{r}_{ibt,s} &\quad \text{is the dual variable for $\ldots$}\\
+UX^{C}_{ibt,s} &\quad \text{is the outage status of generation unit}\\
+X_{it} &\quad \text{is the installation status of the generation unit}\\
+\hat{X}_{it} &\quad \text{}\\
+\end{split}
+\end{equation}
+
 Cumulant method
 \cite{kothari2009optimal, stremel1980production, sirikum2006power}
 
