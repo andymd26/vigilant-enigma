@@ -1,0 +1,25 @@
+Sets
+
+;
+Parameters
+
+;
+Table
+
+;
+Scalar
+
+;
+Variables
+
+;
+Positive Variable
+
+;
+Equations
+
+;
+
+Model gep /all/;
+Solve gep using mip minimizing z; 
+Display ;
