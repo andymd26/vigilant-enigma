@@ -1,0 +1,59 @@
+\documentclass[10pt]{amsart} 
+\usepackage{graphicx} 
+\usepackage{float} % necessary for placement of figures
+\usepackage{amsmath}
+\usepackage{ upgreek }
+\usepackage{array}
+\usepackage[style = authoryear, sorting = nyt, backend = biber]{biblatex}
+\addbibresource[location = local, type = file]{C:/Users/bloh356/Google Drive/Library/Library.bib}
+% \addbibresource[location = local, type = file]{/Users/bloh356/Google Drive/Library/Library.bib}
+
+\begin{document}
+\section{Introduction}
+This section details the underlying assumptions of the current model. 
+It will be updated as model development continues.
+The model is a two stage stochastic model.
+In the first stage of the model, investments are made in the capacity of power plants.
+In the second stage of the model, operation decisions are made on how much to run each power plant. 
+
+Time periods: 1
+Nodes: 1
+Technologies: 2
+Stages: 2
+Stochastic: Not yet
+
+\section{Model}
+\begin{flushleft}
+\textit{Indices and sets}\\
+\textit{p} = 1, \ldots, \textit{P} index of the available technologies \\ 
+\textit{n} = 1, \ldots, \textit{N} index of the set of buses \\
+\textit{h} = 1, \ldots, \textit{H} index of the operating modes in the load duration curve \\
+\textit{t} = 1, \ldots, \textit{T} index of the periods in the model \\
+\textit{s} = 1, \ldots, \textit{S} index of scenarios \\
+\end{flushleft}
+
+\begin{flushleft}
+\textit{Parameters} \\
+$a_{p}$ = forced outage rate of technology \textit{p} \\
+$s_{p}$ = average size of technology \textit{p} \\
+$k_{p}$ = fixed cost of technology \textit{p} in USD per MW \\
+$prob_{s}$ = probability of each scenario (assuming discrete distribution) \\
+\end{flushleft}
+
+\begin{flushleft}
+\textit{Variables}
+$x_{p}$ = number of each type of each technology $\textit{p}$ to build [integer variable] \\
+$y_{p}$ = capacity of technology \textit{p} used \\
+\end{flushleft}
+
+\begin{equation*}
+\begin{aligned}
+& \underset{x_{p}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot s_{p}\cdot x_{p} + \sum_{p=1}^{P} \sum_{s=1}^{S} prob_{s} \cdot c_{p}\cdot y_{p,s} \\
+& \text{subject to} & & f_i(x) \leq b_i, \; i = 1, \ldots, m. \\
+& &&\sum_{p=1}^{P} y_{p} = d \\
+& &&\sum y_{p} \leq a_{p}\cdot x_{p} \\
+& && x_{p}, y_{p} \geq 0
+\end{aligned}
+\end{equation*}
+
+\end{document}
