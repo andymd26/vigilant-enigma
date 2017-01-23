@@ -35,23 +35,25 @@ Stochastic: Not yet
 \begin{flushleft}
 \textit{Parameters} \\
 $a_{p}$ = forced outage rate of technology \textit{p} \\
-$s_{p}$ = average size of technology \textit{p} \\
+$b$ = budget available for investment in new power production technology \\
+$c_{p}$ = marginal cost of power production technology \textit{p} \\
 $k_{p}$ = fixed cost of technology \textit{p} in USD per MW \\
+$s_{p}$ = average size of technology \textit{p} \\
 $prob_{s}$ = probability of each scenario (assuming discrete distribution) \\
 \end{flushleft}
 
 \begin{flushleft}
 \textit{Variables}
-$x_{p}$ = number of each type of each technology $\textit{p}$ to build [integer variable] \\
-$y_{p}$ = capacity of technology \textit{p} used \\
+$x_{p,s}$ = number of each type of each technology $\textit{p}$ to build [integer variable] \\
+$y_{p,s}$ = capacity of technology \textit{p} used \\
 \end{flushleft}
 
 \begin{equation*}
 \begin{aligned}
-& \underset{x_{p}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot s_{p}\cdot x_{p} + \sum_{p=1}^{P} \sum_{s=1}^{S} prob_{s} \cdot c_{p}\cdot y_{p,s} \\
-& \text{subject to} & & f_i(x) \leq b_i, \; i = 1, \ldots, m. \\
-& &&\sum_{p=1}^{P} y_{p} = d \\
-& &&\sum y_{p} \leq a_{p}\cdot x_{p} \\
+& \underset{x_{p,s}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot s_{p}\cdot \sum_{n=1}^{N} x_{n,p} + \sum_{s=1}^{S} \sum_{n=1}^{N} prob_{n,s} \cdot \sum_{p=1}^{P} c_{p}\cdot y_{n,p,s} \\
+& \text{subject to} & & \sum_{p=1}^{P} y_{p} = d_{s} \ \forall \ s \\
+& &&\sum_{p=1}^{P} y_{p} \leq a_{p}\cdot x_{p}\cdot s_{p}\\
+& &&\sum_{p=1}^{P} x_{p}\cdot k_{p} \cdot s_{p} \leq b \\
 & && x_{p}, y_{p} \geq 0
 \end{aligned}
 \end{equation*}
