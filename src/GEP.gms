@@ -4,11 +4,15 @@ $offtext
 
 Sets
 n node /n1*n3/
+*The reference node is node 3
 p technology /p1, p2/
 s scenario /low, medium, high/
+L transmission line /L1*L3/
+alias(L, q)
 ;
 Variables
-z objective function value
+z 'objective function value'
+power(L) 
 ;
 Positive variables
 y(n,p,s) 'amount of time to run each power plant technology p at node n for scenario s (2nd stage decision)'
@@ -17,13 +21,11 @@ w(n,p,s) 'McCormick envelope variable'
 ;
 
 Parameters
-$ontext
-Transmission network characteristics
-$offtext
+*Transmission network characteristics
+p(L)
 ptdf(n,) = a(p) + 2 ;
-$ontext
-Plant characteristics
-$offtext
+
+*Plant characteristics
 size(p) 'average size of plant p in MW'
   /p1 100
    p2 200 / ;
@@ -56,6 +58,17 @@ Table prob(n,s) 'probability of each demand scenario'
   n1  0.25  0.50    0.25
   n2  0.25  0.50    0.25
   n3  0.25  0.50    0.25  
+;
+Table incidence(n, L) 'node-incidence matrix'
+      L1  L2  L3
+  n1  1   1   0
+  n2  -1  0   1
+;
+Table reactance(L,L) 'transmission line reactance matrix'
+      q1  q2  q3
+  L1  1   0   0
+  L2  0   1   0
+  L3  0   0   1
 ;
 
 loop(n, abort$(abs(sum(s,prob(n,s))-1)>0.001) "Probabilities do not sum to one");
