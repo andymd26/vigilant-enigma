@@ -2,17 +2,36 @@ $ontext
 A two-stage generation expansion planning problem (GEP) with one producer attempting to satisfy a known demand at one node using two technologies while minimzing the cost of providing electricity service. Each technology alternative has a fixed and marginal cost, which needs to be balanced in order to select the optimal production mix. As expected low marginal cost technologies tend to have higher fixed costs. In this early model version, we implement the formulation as a one period optimization problem. In this version of the model we allow the number of power plants built to be continuous, as opposed to discrete. In later versions we will implement the integer model. 
 $offtext
 
+$setglobal R "D:\Program Files\R-3.3.2\bin\R.exe"
+*Location of the R executable
+$setglobal Rfile "D:\Users\andymd26\Documents\vigilant-enigma\src\ptdf.r"
+*Location of the rscript to be run
+
 Sets
 n node /n1*n3/
 *The reference node is node 3
-p technology /p1, p2/
+p technology /p1,p2/
 s scenario /low, medium, high/
 L transmission line /L1*L3/
-alias(L, q)
 ;
+execute_unload "D:\Users\andymd26\Documents\vigilant-enigma\src\output\sets.gdx";  
+*Location where the rscript expects the set data to be
+execute "=%R% --rhome=%system.fp% CMD BATCH %rfile% %rfile%.log"
+if(errorlevel<>0,
+display "--- Errors encountered in %rfile%"
+display "--- Process will be aborted"
+display "--- Check the %rfile%.log"
+abort "Errors found in %Rfile%";
+);
+*Stops the process if errors exist in the R code
+$CALL GDXXRW.EXE "D:\Users\andymd26\Documents\vigilant-enigma\src\output\ptdf.csv" par=PTDF rng=A1:D4
+*Convert the .csv file to a .gdx file
+$GDXIN ptdf.gdx
+$LOAD PTDF
+$GDXIN
+
 Variables
 z 'objective function value'
-power(L) 
 ;
 Positive variables
 y(n,p,s) 'amount of time to run each power plant technology p at node n for scenario s (2nd stage decision)'
@@ -22,8 +41,8 @@ w(n,p,s) 'McCormick envelope variable'
 
 Parameters
 *Transmission network characteristics
-p(L)
-ptdf(n,) = a(p) + 2 ;
+p(L);
+PTDF(i,j);
 
 *Plant characteristics
 size(p) 'average size of plant p in MW'
