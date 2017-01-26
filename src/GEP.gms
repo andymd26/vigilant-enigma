@@ -10,94 +10,77 @@ $setglobal Rfile "D:\Users\andymd26\Documents\vigilant-enigma\src\ptdf.r"
 Sets
 n node /n1*n3/
 *The reference node is node 3
+nn node set not including reference node /nn1*nn2/
 p technology /p1,p2/
 s scenario /low, medium, high/
-L transmission line /L1*L3/
-;
+L transmission line /L1*L3/;
+
 execute_unload "D:\Users\andymd26\Documents\vigilant-enigma\src\output\sets.gdx";  
-*Location where the rscript expects the set data to be
+*Location where the rscript expects the GAMS output data to be. Any changes here need to be matched in the R script.
 execute "=%R% --rhome=%system.fp% CMD BATCH %rfile% %rfile%.log"
+*Command to run the R script and have GAMS wait for the result before continuing.
 if(errorlevel<>0,
 display "--- Errors encountered in %rfile%"
 display "--- Process will be aborted"
 display "--- Check the %rfile%.log"
 abort "Errors found in %Rfile%";
 );
-*Stops the process if errors exist in the R code
+*Stops the process if the R code kicks off any errors
 $CALL GDXXRW.EXE "D:\Users\andymd26\Documents\vigilant-enigma\src\output\ptdf.csv" par=PTDF rng=A1:D4
-*Convert the .csv file to a .gdx file
+*Convert the .csv file to a .gdx file. We could have the R script generate the GDX file but it didn't seem to work the first time I tried it.
 $GDXIN ptdf.gdx
 $LOAD PTDF
 $GDXIN
+*Load the ptdf matrix.
 
 Variables
-z 'objective function value'
-;
+z 'objective function value';
+
 Positive variables
 y(n,p,s) 'amount of time to run each power plant technology p at node n for scenario s (2nd stage decision)'
 x(n,p)   'number of power plants using technology p to build at node n (1st stage decision)'
-w(n,p,s) 'McCormick envelope variable'
-;
+w(n,p,s) 'McCormick envelope variable';
 
 Parameters
 *Transmission network characteristics
-p(L);
-PTDF(i,j);
+p(L) 'Power flow on arc L';
+PTDF(L,nn) 'Power transfer distribution factors (empty matrix)';
 reactance(L) 'Transmission line L reactance in ...'
   /L1 0.05
    L2 0.05
    L3 0.05/;
    
 *Plant characteristics
-size(p) 'average size of plant p in MW'
+size(p) 'Average size of plant p in MW'
   /p1 100
    p2 200 / ;
-k(p) 'fixed cost of plant p in USD per MW'
+k(p) 'Fixed cost of plant p in USD per MW'
   /p1 10
    p2 20  / ;
-c(p) 'marginal cost of plant p in USD per MWh'
+c(p) 'Marginal cost of plant p in USD per MWh'
   /p1 3
    p2 1 / ;
-a(p) 'forced outage rate of plant p in percent'
+a(p) 'Forced outage rate of plant p in percent'
   /p1 0.80
    p2 0.95  / ;
-$ontext
-Demand characteristics
-$offtext
-b 'budget for the period'
+
+*Other system parameters
+b 'budget constraint for the period'
   /200/ ;
 
 Table d(n,s) 'demand at node n for scenario s in MWh'
       low   medium  high
   n1  50000 100000  150000
   n2  50000 100000  150000 
-  n3  50000 100000  150000
-$ontext
-demand doesn't need an index in the single node case
-$offtext
-;
+  n3  50000 100000  150000  ;
 Table prob(n,s) 'probability of each demand scenario'
       low   medium  high
   n1  0.25  0.50    0.25
   n2  0.25  0.50    0.25
-  n3  0.25  0.50    0.25  
-;
-Table incidence(n, L) 'node-incidence matrix'
-      L1  L2  L3
-  n1  1   1   0
-  n2  -1  0   1
-;
-Table reactance(L,L) 'transmission line reactance matrix'
-      q1  q2  q3
-  L1  1   0   0
-  L2  0   1   0
-  L3  0   0   1
-;
+  n3  0.25  0.50    0.25  ;
 
 loop(n, abort$(abs(sum(s,prob(n,s))-1)>0.001) "Probabilities do not sum to one");
-$ontext
-This loop sums the probabilites of each outcome state for each scenario and node, and ensures that the probabilities sum to one
-$offtext
+*This loop sums the probabilites of each outcome state for each scenario and node, and ensures that the probabilities sum to one
 
 Equations
 obj               'objective function value'
@@ -110,7 +93,7 @@ $ontext
 demand(n,s).. sum(p, x(n,p)*size(p)*y(n,p,s)) =g= d(n,s) ;
 original constraint
 where w(n,p,s) = x(n,p)*y(n,p,s)
-$
+$offtext
 demand(n,s).. sum(p, w(n,p,s)*size(p)) =g= d(n,s);
 mcc_2(n,s).. w(n,p,s) =g= xl*y(n,p,s) + x(n,p)*yl - xl*yl;
 mcc_3(n,s).. w(n,p,s) =l= xu*y(n,p,s) + x(n,p)*yl - xu*yu;
