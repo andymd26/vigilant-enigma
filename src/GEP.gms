@@ -43,7 +43,11 @@ Parameters
 *Transmission network characteristics
 p(L);
 PTDF(i,j);
-
+reactance(L) 'Transmission line L reactance in ...'
+  /L1 0.05
+   L2 0.05
+   L3 0.05/;
+   
 *Plant characteristics
 size(p) 'average size of plant p in MW'
   /p1 100
