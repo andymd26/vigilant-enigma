@@ -6,6 +6,8 @@ $setglobal R "D:\Program Files\R-3.3.2\bin\R.exe"
 *Location of the R executable
 $setglobal Rfile "D:\Users\andymd26\Documents\vigilant-enigma\src\ptdf.r"
 *Location of the rscript to be run
+option Limcol = 10;
+option Limrow = 10; 
 
 Sets
 n node /n1*n3/
@@ -106,4 +108,8 @@ production(n,p,s).. y(n,p,s) =l= a(p)*x(n,p)*8760 ;
 budget.. sum((n,p), x(n,p)*k(p)*size(p)) =l= b;
 
 model gep /all/;
+$ontext
+model_name.tryLinear = 1;
+*Might be a worthwhile command when the model is shifted back to the MIP. Examine empirical NLP model to see if there are any NLP terms active. If there are none the default LP solver will be used. To activate use model_name.trylinear=1. Default value is 0. The procedure also checks to see if QCP, and DNLP models can be reduced to an LP; MIQCP and MINLP can be solved as an MIP; RMIQCP and RMINLP can be solved as an RMIP.
+$offtext
 solve gep using rminlp minimizing z;
