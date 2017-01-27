@@ -9,11 +9,14 @@ $setglobal Rfile "D:\Users\andymd26\Documents\vigilant-enigma\src\ptdf.r"
 
 Sets
 n node /n1*n3/
+ref_node(n) 'Reference node for which the phase angle is set to zero' /n3/
 *The reference node is node 3
-nn node set not including reference node /nn1*nn2/
 p technology /p1,p2/
 s scenario /low, medium, high/
 L transmission line /L1*L3/;
+nn(n);
+nn(n) = yes$(not ref_node(n));
+*Generates a subset of all nodes that aren't the reference node. 
 
 execute_unload "D:\Users\andymd26\Documents\vigilant-enigma\src\output\sets.gdx";  
 *Location where the rscript expects the GAMS output data to be. Any changes here need to be matched in the R script.
