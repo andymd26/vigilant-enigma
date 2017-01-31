@@ -2,7 +2,8 @@
 \usepackage{graphicx} 
 \usepackage{float} % necessary for placement of figures
 \usepackage{amsmath}
-\usepackage{ upgreek }
+\usepackage{mathtools}
+\usepackage{upgreek}
 \usepackage{array}
 \usepackage[style = authoryear, sorting = nyt, backend = biber]{biblatex}
 \addbibresource[location = local, type = file]{C:/Users/bloh356/Google Drive/Library/Library.bib}
@@ -22,6 +23,9 @@ Technologies: 2
 Stages: 2
 Stochastic: Not yet
 
+To do:
+divide capacity into existing capacity and new capacity
+
 \section{Model}
 \begin{flushleft}
 \textit{Indices and sets}\\
@@ -36,26 +40,83 @@ Stochastic: Not yet
 \textit{Parameters} \\
 $a_{p}$ = forced outage rate of technology \textit{p} \\
 $b$ = budget available for investment in new power production technology \\
-$c_{p}$ = marginal cost of power production technology \textit{p} \\
-$k_{p}$ = fixed cost of technology \textit{p} in USD per MW \\
-$s_{p}$ = average size of technology \textit{p} \\
+$c_{p}$ = marginal cost of power production technology \textit{p} in USD per MWh \\
+$k_{p}$ = fixed cost of power production technology \textit{p} in USD per MW \\
+$\lambda$ = Average capacity in MW of the target Poisson distribution \\ 
+$size_{p}$ = average plant size in MW for power production technology \textit{p} \\
 $prob_{s}$ = probability of each scenario (assuming discrete distribution) \\
 \end{flushleft}
 
 \begin{flushleft}
-\textit{Variables}
-$x_{p,s}$ = number of each type of each technology $\textit{p}$ to build [integer variable] \\
-$y_{p,s}$ = capacity of technology \textit{p} used \\
+\textit{Variables} \\
+$x_{p,n}$ = number of each type of each power production technology $\textit{p}$ to build at node \textit{n} [integer variable] \\
+$y_{p,n,h,s}$ = capacity of power production technology \textit{p} used at node \textit{n} during operating mode \textit{h} under scenario \textit{s} \\
 \end{flushleft}
 
 \begin{equation*}
 \begin{aligned}
-& \underset{x_{p,s}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot s_{p}\cdot \sum_{n=1}^{N} x_{n,p} + \sum_{s=1}^{S} \sum_{n=1}^{N} prob_{n,s} \cdot \sum_{p=1}^{P} c_{p}\cdot y_{n,p,s} \\
+& \underset{x_{p,n}, y_{p,n,h,s}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot size_{p}\cdot \sum_{n=1}^{N} x_{p,n} + \sum_{s=1}^{S} \sum_{n=1}^{N} prob_{n,s} \cdot \sum_{h=1}^{H}\sum_{p=1}^{P} c_{p}\cdot y_{p,n,h,s} \\
 & \text{subject to} & & \sum_{p=1}^{P} y_{p} = d_{s} \ \forall \ s \\
 & &&\sum_{p=1}^{P} y_{p} \leq a_{p}\cdot x_{p}\cdot s_{p}\\
-& &&\sum_{p=1}^{P} x_{p}\cdot k_{p} \cdot s_{p} \leq b \\
-& && x_{p}, y_{p} \geq 0
+& &&\sum_{p=1}^{P} k_{p} \cdot size_{p} \cdot \sum_{n=1}^{N} x_{p,n} \leq b \\
+& &&LOLP \leq LOLP_{C}
+& && x_{p,n}, y_{p,n,h,s} \geq 0
 \end{aligned}
 \end{equation*}
 
+\section{Explanation of the constraints}
+\subsection{Node balance constraints}
+Cumulative
+\begin{equation}
+\sum_{p=1}^{P} y_{p,n,h,s} + trans_{L} = D_{n} \quad \forall \; n,h,s
+\end{equation}
+\subsection{Transmission line capacity}
+\begin{equation}
+\text{PTDF}\cdot \ldots \leq T_{L} \quad \forall \; L
+\end{equation}
+\subsection{Budget constraint} 
+\begin{equation}
+\sum_{p=1}^{P} k_{p} \cdot size_{p} \cdot \sum_{n=1}^{N}x_{p,n} \leq b
+\end{equation}
+\section{Methods for incorporation of reliability}
+\subsection{Average forced outage rate capacity adjustment}
+Power production from technology \textit{p} in each period is constrained to be less than the average forced outage rate of the technology \textit{p} multiplied by the total installed capacity of technology \textit{p} at node \textit{n}.
+\begin{equation}
+y_{p,n,h,s} \leq a_{p} \cdot x_{p,l} \cdot s_{p} \quad \forall \; h,s
+\end{equation}
+\subsection{Cumulants}
+\begin{equation}
+(1 - ls)\cdot \big(\sum_{n=1}^{N} a_{p}\cdot size_{p} \cdot x_{p,n}
+\end{equation}
+
+\subsection{Poisson approximation}
+The Poisson approximation method discussed here approaches the problem of identifying an optimal portfolio of generation assets from the perspective of the targeted portfolio of generators, rather than properties of the individual generation units.
+Each power plant is modeled as having two states: either on or off with the likelihood of each state determined by the forced outage rate (FOR) parameter \textit{$a_{p}$}.
+The model selects the number of each power production technology to build \textit{p} at each node \textit{n} such that a system of constraints governing the operation of the network are met.
+
+We model the likelihood of an individual generation unit being able to turn on as following a Bernoulli distribution.
+The sum of Bernoulli random variables is a binomial random variable if the probability of success is the same for each Bernoulli R.V.  
+If the probability of success is different amongst the Bernoulli R.V.'s than their sum follows a Poisson Binomial R.V., which is generally characterized as having fatter tails as compared to a Poisson R.V.
+The Poisson Binomial distribution can be approximated by the Poisson distribution  with the quality of the approximation depending on the success probability and number of generation units (according to Le Cam's Theorem).
+
+The Poisson distribution is a single parameter distribution defined by its mean $\lambda$. 
+This means that each Poisson distribution, as defined by its $\lambda$, value has a unique PDF and CDF. 
+We leverage this information to create a constraint that ensures system reliability is above a selected threshold. 
+
+Power system planning involves the determination of an appropriate outage frequency by planners.
+This is because it becomes prohibitively more expensive to ensure redundancy the higher the probability of success climbs (i.e., the more redundancy built into the system the higher the costs of operating said system).
+This cost/reliability tradeoff is a central part of any engineered system.
+In the United States power systems are designed to have system demand exceed system capacity 3 hours a year.
+With this information, as well as the load duration curve, we can calculate the $\lambda$ of the target Poisson distribution.
+We used the R software package to identify the Poisson distribution whereby the percentile of interest matched with the quantity in the load duration curve.
+It is important to remember that in the Poisson distribution this is a unique mapping but in the Poisson Binomial distribution, as it is a two parameter distribution, there are an infinite number of mappings.
+
+The constraint to be implemented in the model is that the weighted average available capacity is larger than $\lambda$ see Equation \ref{poisson.approx}.
+This constraint leverages information that we necessarily have before we even run the model (i.e., assumptions of future load demand) while also avoiding the need to parameterize reserve capacity into the model. 
+One issue with this approach is the distance between our approximation and the actual Poisson Binomial distribution.
+I propose that we implement the model and conduct numerical experiments to identify the gap.
+
+\begin{equation}\label{poisson.approx}
+\sum_{p=1}^{P} a_{p} \cdot size_{p} \cdot \sum_{n=1}^{N} x_{p,n} \geq \lambda
+\end{equation}
 \end{document}
