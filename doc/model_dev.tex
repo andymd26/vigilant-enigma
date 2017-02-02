@@ -24,14 +24,20 @@ Stages: 2
 Stochastic: Not yet
 
 To do:
-divide capacity into existing capacity and new capacity
+\begin{enumerate}
+\item divide capacity into existing capacity and new capacity
+\item add code to R PTDF file to add a column of zeros for the reference column; remove the set NN 
+\item the current iteration of the model parameterizes \textit{y} as the capacity used instead of hours used
+\end{enumerate}
 
 \section{Model}
 \begin{flushleft}
 \textit{Indices and sets}\\
-\textit{p} = 1, \ldots, \textit{P} index of the available technologies \\ 
-\textit{n} = 1, \ldots, \textit{N} index of the set of buses \\
 \textit{h} = 1, \ldots, \textit{H} index of the operating modes in the load duration curve \\
+\textit{l} = 1, \ldots, \textit{L} index of available transmission lines \\
+\textit{n} = 1, \ldots, \textit{N} index of the set of buses \\
+\textit{nn} = 1, \ldots, \textit{NN} subset of the set \textit{n} that excludes the reference node \\ 
+\textit{p} = 1, \ldots, \textit{P} index of the available technologies \\ 
 \textit{t} = 1, \ldots, \textit{T} index of the periods in the model \\
 \textit{s} = 1, \ldots, \textit{S} index of scenarios \\
 \end{flushleft}
@@ -41,34 +47,44 @@ divide capacity into existing capacity and new capacity
 $a_{p}$ = forced outage rate of technology \textit{p} \\
 $b$ = budget available for investment in new power production technology \\
 $c_{p}$ = marginal cost of power production technology \textit{p} in USD per MWh \\
+$d_{n,h,s}$ = demand at node \textit{n} for operating level \textit{h} in scenario \textit{s} \\
 $k_{p}$ = fixed cost of power production technology \textit{p} in USD per MW \\
-$\lambda$ = Average capacity in MW of the target Poisson distribution \\ 
+$\lambda$ = average capacity in MW of the target Poisson distribution \\ 
+$u.line_{l}$ = upper bound on transmission line \textit{l} capacity \\
+$l.line_{l}$ = lower bound on transmission line  \textit{l} capacity \\
+$OC$ = outage penalty cost for unserved energy in \$ per MWh \\
 $size_{p}$ = average plant size in MW for power production technology \textit{p} \\
-$prob_{s}$ = probability of each scenario (assuming discrete distribution) \\
+$prob_{h,n,s}$ = probability of each scenario (assuming discrete distribution) \\
 \end{flushleft}
 
 \begin{flushleft}
 \textit{Variables} \\
+$m_{l}$ = transmission on line \textit{l} \\
+\textit{UE}$_{n,h,s}$ = unserved energy at node \textit{n} during operating level \textit{h} for scenario \textit{s} \\
 $x_{p,n}$ = number of each type of each power production technology $\textit{p}$ to build at node \textit{n} [integer variable] \\
 $y_{p,n,h,s}$ = capacity of power production technology \textit{p} used at node \textit{n} during operating mode \textit{h} under scenario \textit{s} \\
 \end{flushleft}
 
 \begin{equation*}
 \begin{aligned}
-& \underset{x_{p,n}, y_{p,n,h,s}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot size_{p}\cdot \sum_{n=1}^{N} x_{p,n} + \sum_{s=1}^{S} \sum_{n=1}^{N} prob_{n,s} \cdot \sum_{h=1}^{H}\sum_{p=1}^{P} c_{p}\cdot y_{p,n,h,s} \\
-& \text{subject to} & & \sum_{p=1}^{P} y_{p} = d_{s} \ \forall \ s \\
+& \underset{x_{p,n}, y_{p,n,h,s}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot size_{p}\cdot \sum_{n=1}^{N} x_{p,n} + \sum_{s=1}^{S} \sum_{n=1}^{N} \sum_{h=1}^{H} prob_{h,n,s} \cdot \sum_{p=1}^{P} \Big(c_{p}\cdot y_{p,n,h,s} + \textit{OC} \cdot \textit{UE}_{n,h,s} \Big)\\
+& \text{subject to} & & \sum_{p=1}^{P} y_{p,n,h,s} + m_{l} + \textit{UE}_{n,h,s} = d_{n,h,s} \ \forall \; n,h,s \\
+& && \sum_{n=1}^{N}\sum_{p=1}^{P} x_{p,n} \cdot a_{p} \cdot \text{size}_{p} \geq \lambda \\
 & &&\sum_{p=1}^{P} y_{p} \leq a_{p}\cdot x_{p}\cdot s_{p}\\
 & &&\sum_{p=1}^{P} k_{p} \cdot size_{p} \cdot \sum_{n=1}^{N} x_{p,n} \leq b \\
-& &&LOLP \leq LOLP_{C}
+& &&LOLP \leq LOLP_{C} \\
+& &&\sum_{l=1}^{L} m_{l} = 0 \\ 
+& &&\sum_{n=1}^{N} \textit{PTDF}_{n,l} \cdot m_{l} \leq \textit{u.line}_{l} \quad \forall \; l \\
+& &&-\sum_{n=1}^{N} \textit{PTDF}_{n,l} \cdot m_{l} \leq \textit{l.line}_{l} \quad \forall \; l \\
 & && x_{p,n}, y_{p,n,h,s} \geq 0
 \end{aligned}
 \end{equation*}
 
 \section{Explanation of the constraints}
 \subsection{Node balance constraints}
-Cumulative
+The demand at node \textit{n} during operating level \textit{h} of scenario \textit{s} can be met by generators at other nodes in the system and transmitted to the node, generators at the node, or can go unmet. 
 \begin{equation}
-\sum_{p=1}^{P} y_{p,n,h,s} + trans_{L} = D_{n} \quad \forall \; n,h,s
+\sum_{p=1}^{P} y_{p,n,h,s} + m_{L} + \textit{UE}_{h,n,s}= D_{n} \quad \forall \; h,n,s
 \end{equation}
 \subsection{Transmission line capacity}
 \begin{equation}
@@ -77,6 +93,11 @@ Cumulative
 \subsection{Budget constraint} 
 \begin{equation}
 \sum_{p=1}^{P} k_{p} \cdot size_{p} \cdot \sum_{n=1}^{N}x_{p,n} \leq b
+\end{equation}
+\subsection{Transmission system: Energy balance constraint}
+The sum of the flow across the transmission system must equal zero.
+\begin{equation}
+\sum_{l=1}^{L} m_{l} = 0
 \end{equation}
 \section{Methods for incorporation of reliability}
 \subsection{Average forced outage rate capacity adjustment}
