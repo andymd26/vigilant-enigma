@@ -47,36 +47,38 @@ To do:
 $a_{p}$ = forced outage rate of technology \textit{p} \\
 $b$ = budget available for investment in new power production technology \\
 $c_{p}$ = marginal cost of power production technology \textit{p} in USD per MWh \\
-$d_{n,h,s}$ = demand at node \textit{n} for operating level \textit{h} in scenario \textit{s} \\
+$d_{h,n,s}$ = demand at node \textit{n} for operating level \textit{h} in scenario \textit{s} \\
 $k_{p}$ = fixed cost of power production technology \textit{p} in USD per MW \\
 $\lambda$ = average capacity in MW of the target Poisson distribution \\ 
-$u.line_{l}$ = upper bound on transmission line \textit{l} capacity \\
 $l.line_{l}$ = lower bound on transmission line  \textit{l} capacity \\
-$OC$ = outage penalty cost for unserved energy in \$ per MWh \\
+$u.line_{l}$ = upper bound on transmission line \textit{l} capacity \\
+\textit{LOLC}$_{C}$ = exogeneously determined loss of load probability threshold \\
+$VLL$ = value of lost load, the penalty cost for unserved energy in \$ per MWh \\
 $size_{p}$ = average plant size in MW for power production technology \textit{p} \\
-$prob_{h,n,s}$ = probability of each scenario (assuming discrete distribution) \\
+$prob_{n,h,s}$ = probability of each scenario (assuming discrete distribution) \\
 \end{flushleft}
 
 \begin{flushleft}
 \textit{Variables} \\
-$m_{l}$ = transmission on line \textit{l} \\
-\textit{UE}$_{n,h,s}$ = unserved energy at node \textit{n} during operating level \textit{h} for scenario \textit{s} \\
-$x_{p,n}$ = number of each type of each power production technology $\textit{p}$ to build at node \textit{n} [integer variable] \\
-$y_{p,n,h,s}$ = capacity of power production technology \textit{p} used at node \textit{n} during operating mode \textit{h} under scenario \textit{s} \\
+$m_{h,n,s}$ = the import or export of power to or from node \textit{n} for operating mode \textit{h} under scenario \textit{s} \\
+\textit{UE}$_{h,n,s}$ = unserved energy at node \textit{n} during operating level \textit{h} for scenario \textit{s} \\
+$x_{n,p}$ = number of each type of each power production technology $\textit{p}$ to build at node \textit{n} [integer variable] \\
+$y_{h,n,p,s}$ = capacity of power production technology \textit{p} used at node \textit{n} during operating mode \textit{h} under scenario \textit{s} \\
 \end{flushleft}
 
 \begin{equation*}
 \begin{aligned}
-& \underset{x_{p,n}, y_{p,n,h,s}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot size_{p}\cdot \sum_{n=1}^{N} x_{p,n} + \sum_{s=1}^{S} \sum_{n=1}^{N} \sum_{h=1}^{H} prob_{h,n,s} \cdot \sum_{p=1}^{P} \Big(c_{p}\cdot y_{p,n,h,s} + \textit{OC} \cdot \textit{UE}_{n,h,s} \Big)\\
-& \text{subject to} & & \sum_{p=1}^{P} y_{p,n,h,s} + m_{l} + \textit{UE}_{n,h,s} = d_{n,h,s} \ \forall \; n,h,s \\
-& && \sum_{n=1}^{N}\sum_{p=1}^{P} x_{p,n} \cdot a_{p} \cdot \text{size}_{p} \geq \lambda \\
-& &&\sum_{p=1}^{P} y_{p} \leq a_{p}\cdot x_{p}\cdot s_{p}\\
-& &&\sum_{p=1}^{P} k_{p} \cdot size_{p} \cdot \sum_{n=1}^{N} x_{p,n} \leq b \\
+& \underset{x_{n,p}, y_{h,n,p,s}}{\text{minimize}} & & \sum_{p=1}^{P} k_{p}\cdot size_{p}\cdot \sum_{n=1}^{N} x_{n,p} + \sum_{s=1}^{S} \sum_{n=1}^{N} \sum_{h=1}^{H} prob_{h,n,s} \cdot \sum_{p=1}^{P} \Big(c_{p}\cdot y_{h,n,p,s} + \textit{VLL} \cdot \textit{UE}_{h,n,s} \Big)\\
+& \text{subject to} & & \\
+& && \sum_{p=1}^{P} y_{h,n,p,s} + m_{h,n,s} + \textit{UE}_{h,n,s} = d_{h,n,s} \ \forall \; h,n,s \\
+& && \sum_{n=1}^{N}\sum_{p=1}^{P} x_{n,p} \cdot a_{p} \cdot \text{size}_{p} \geq \lambda \\
+& &&\sum_{h=1}^{H} y_{h,n,p,s} \leq a_{p}\cdot x_{n,p}\cdot size_{p} \cdot 8760 \quad \forall \; n,p,s \\
+& &&\sum_{p=1}^{P} k_{p} \cdot size_{p} \cdot \sum_{n=1}^{N} x_{n,p} \leq b \\
 & &&LOLP \leq LOLP_{C} \\
-& &&\sum_{l=1}^{L} m_{l} = 0 \\ 
-& &&\sum_{n=1}^{N} \textit{PTDF}_{n,l} \cdot m_{l} \leq \textit{u.line}_{l} \quad \forall \; l \\
-& &&-\sum_{n=1}^{N} \textit{PTDF}_{n,l} \cdot m_{l} \leq \textit{l.line}_{l} \quad \forall \; l \\
-& && x_{p,n}, y_{p,n,h,s} \geq 0
+& &&\sum_{l=1}^{L} m_{h,n,s} = 0 \\ 
+& &&\sum_{n=1}^{N} \textit{PTDF}_{l,n} \cdot m_{h,n,s} \leq \textit{u.line}_{l} \quad \forall \; l \\
+& &&-\sum_{n=1}^{N} \textit{PTDF}_{l,n} \cdot m_{h,n,s} \leq \textit{l.line}_{l} \quad \forall \; l \\
+& && x_{n,p}, y_{h,n,p,s} \geq 0
 \end{aligned}
 \end{equation*}
 
