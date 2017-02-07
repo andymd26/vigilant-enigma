@@ -16,6 +16,8 @@ dat = dat %>%
 
 # Haven't finished this yet but regression trees might be a useful tool for determining the optimal number of load segments (i.e., minimized the squared distance from the LDC)
 # The tree identifies the break points in the data that minimize the 'distance'. If we used these break points is the best guess at the load for that duration equal to the mean of the x-values in that bin?
+# Apporoach to implement after getting back: loop through x by 1 where x is the hours in a year. Calculate the average of electricity capacity on either side of the hour chosen. Calculate the squared difference between the actual electricity and the mean for each of the hours. The minimum of this is the best break point.
+
 tree = rpart(elec ~ index, data = dat, control=rpart.control(minsplit=2, cp=0.0001))
 printcp(tree) # display the results
 plotcp(tree) # visualize cross-validation results
